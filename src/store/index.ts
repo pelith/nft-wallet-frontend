@@ -1,6 +1,9 @@
-import { create } from 'zustand'
 import { Web3Provider } from '@ethersproject/providers'
-export interface IWeb3State extends IPartialWeb3State {
+import { create } from 'zustand'
+import { immer } from 'zustand/middleware/immer'
+
+import { ChainId, DEFAULT_CHAIN_ID } from '@/constants/chain'
+export interface IWeb3State {
   account: string
   web3Provider: Web3Provider | null
   provider: any
@@ -10,10 +13,28 @@ export interface IWeb3State extends IPartialWeb3State {
   blockNumber: number
   isInit: boolean
 }
-const useWeb3State = create((set) => ({
-  account: '',
-  chainId: 1,
-  connected: false,
-  isInit: false,
-  web3Provider: null
-}))
+
+export interface IWeb3Store extends IWeb3State {}
+const useWeb3Store = create(
+  immer<IWeb3Store>((set) => ({
+    account: '',
+    web3Provider: null,
+    provider: null,
+    connected: false,
+    connecting: false,
+    chainId: DEFAULT_CHAIN_ID,
+    blockNumber: 0,
+    isInit: false,
+    setWeb3provider(provider: Web3Provider) {
+      set((state) => (state.web3Provider = provider))
+    },
+    updateBaseInfo() {},
+  })),
+)
+
+// do this when load app
+
+export function basicInit() {
+  if (!useWeb3Store.getState().web3Provider) {
+  }
+}
