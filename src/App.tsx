@@ -1,31 +1,59 @@
 import './App.css'
 
-import { useState } from 'react'
+import { parseUnits } from 'ethers/lib/utils'
+import { useEffect } from 'react'
+import {
+  useAccount,
+  useConnect,
+  useContractWrite,
+  useEnsName,
+  usePrepareContractWrite,
+  useSigner,
+} from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
 
-import reactLogo from './assets/react.svg'
+import TestERC20 from '@/constants/abis/testERC20.json'
 
+import { wagmiClient } from './wagmiConfigure'
+const testToken = '0xC7b980b118f39F5ffF64d19FaAf137061aa993d3'
+wagmiClient.connector?.getSigner({ chainId: 5 })
 function App() {
-  const [count, setCount] = useState(0)
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  })
+  const { isConnected, address } = useAccount()
+  const { data: signer } = useSigner()
+  const { data: ensName } = useEnsName({ address })
+  const { config, data: contractData } = usePrepareContractWrite({
+    address: testToken,
+    abi: TestERC20,
+    functionName: 'mint',
+    args: [address, parseUnits('10')],
+    signer,
+  })
+
+  const { data, write } = useContractWrite(config)
+
+  useEffect(() => {
+    console.log(data)
+    console.log(contractData?.request.data)
+  }, [data])
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </div>
+    <>
+      {isConnected ? (
+        <>
+          <button onClick={write}>Test balance</button>
+          <div>Connected to {ensName ?? address}</div>
+          <div>
+            hax data
+            <pre>{contractData?.request.data}</pre>
+          </div>
+        </>
+      ) : (
+        <button onClick={() => connect()}>connect</button>
+      )}
+    </>
   )
 }
 

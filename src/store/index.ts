@@ -1,4 +1,5 @@
 import { Web3Provider } from '@ethersproject/providers'
+import { configureChains, createClient, WagmiConfig } from 'wagmi'
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
@@ -25,9 +26,6 @@ const useWeb3Store = create(
     chainId: DEFAULT_CHAIN_ID,
     blockNumber: 0,
     isInit: false,
-    setWeb3provider(provider: Web3Provider) {
-      set((state) => (state.web3Provider = provider))
-    },
     updateBaseInfo() {},
   })),
 )
@@ -35,6 +33,4 @@ const useWeb3Store = create(
 // do this when load app
 
 export function basicInit() {
-  if (!useWeb3Store.getState().web3Provider) {
-  }
 }
