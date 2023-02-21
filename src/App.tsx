@@ -1,5 +1,6 @@
 import './App.css'
 
+import { Button } from '@chakra-ui/react'
 import { parseUnits } from 'ethers/lib/utils'
 import { useEffect } from 'react'
 import {
@@ -7,8 +8,10 @@ import {
   useConnect,
   useContractWrite,
   useEnsName,
+  useNetwork,
   usePrepareContractWrite,
   useSigner,
+  useSwitchNetwork,
 } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 
@@ -39,16 +42,25 @@ function App() {
     console.log(contractData?.request.data)
   }, [data])
 
+  const { chain } = useNetwork()
+
+  const { switchNetwork } = useSwitchNetwork()
+
   return (
     <>
       {isConnected ? (
         <>
           <button onClick={write}>Test balance</button>
           <div>Connected to {ensName ?? address}</div>
-          <div>
-            hax data
-            <pre>{contractData?.request.data}</pre>
-          </div>
+          {chain !== undefined && chain.id !== 8787 ? (
+            <Button onClick={() => switchNetwork?.(8787)}>Switch to test</Button>
+          ) : chain ? (
+            <>
+              current on {chain.id} {chain?.name}
+            </>
+          ) : (
+            <></>
+          )}
         </>
       ) : (
         <button onClick={() => connect()}>connect</button>
