@@ -1,17 +1,13 @@
 import { configureChains, createClient } from 'wagmi'
-import { fantom, goerli, localhost, mainnet } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 
-const selfTest = {
-  ...localhost,
-  id: 8787,
-}
+import { USED_CHAIN_INFO } from './constants/chain'
 
 export const {
   chains,
   provider: web3Provider,
   webSocketProvider,
-} = configureChains([mainnet, goerli, fantom, selfTest], [publicProvider()])
+} = configureChains(USED_CHAIN_INFO, [publicProvider()])
 
 export const wagmiClient = createClient({
   autoConnect: true,
