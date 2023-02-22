@@ -77,7 +77,7 @@ export function shortenAddress(address: string, padStart = 4, padEnd = padStart)
   return `${parsed.substring(0, padStart + 2)}...${parsed.substring(42 - padEnd)}`
 }
 
-export function isAddress(value: any): string | false {
+export function isAddress(value: any) {
   try {
     return getAddress(value)
   } catch {

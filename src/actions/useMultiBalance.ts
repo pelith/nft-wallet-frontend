@@ -1,5 +1,6 @@
 import { formatUnits } from '@ethersproject/units'
 import { FetchBalanceArgs, FetchBalanceResult } from '@wagmi/core'
+import { BigNumber } from 'ethers'
 import chunk from 'lodash/chunk'
 import { useMemo } from 'react'
 import { useBalance, useBlockNumber, useChainId, useQuery, useQueryClient } from 'wagmi'
@@ -117,7 +118,7 @@ async function fetchMultiChainBalance({
         decimals: decimals as number,
         formatted: formatUnits(value ?? '0', unit ?? decimals),
         symbol: symbol as string,
-        value: value as bigint,
+        value: value as BigNumber,
       }))
     }
 

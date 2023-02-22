@@ -15,8 +15,8 @@ import { InjectedConnector } from 'wagmi/connectors/injected'
 
 import TestERC20 from '@/constants/abis/testERC20.json'
 
+import NFTWalletConnect from './NFTWalletConnect'
 import { wagmiClient } from './wagmiConfigure'
-import Wallet from './Wallet';
 const testToken = '0xC7b980b118f39F5ffF64d19FaAf137061aa993d3'
 wagmiClient.connector?.getSigner({ chainId: 5 })
 function App() {
@@ -56,7 +56,7 @@ function App() {
           ) : chain ? (
             <>
               current on {chain.id} {chain?.name}
-              <Wallet />
+              <NFTWalletConnect />
             </>
           ) : (
             <></>

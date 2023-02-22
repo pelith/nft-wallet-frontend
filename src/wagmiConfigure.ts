@@ -2,6 +2,7 @@ import { configureChains, createClient } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
 import { USED_CHAIN_INFO } from './constants/chain'
+import { useNFTWalletStore } from './store'
 
 export const {
   chains,
@@ -15,3 +16,9 @@ export const wagmiClient = createClient({
   webSocketProvider,
 })
 wagmiClient.subscribe(console.log.bind(console))
+
+wagmiClient.subscribe((state) => {
+  if (state.data?.chain?.id) {
+    useNFTWalletStore.setState({ chainId: state.data.chain.id })
+  }
+})
