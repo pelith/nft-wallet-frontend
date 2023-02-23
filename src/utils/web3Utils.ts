@@ -30,11 +30,8 @@ export function getChainData(chainId: ChainId): IChainData {
 }
 
 export const ETHERSCAN_PREFIXES: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: '',
-  [ChainId.POLYGON]: '',
   [ChainId.FANTOM]: '',
   [ChainId.FORK_MAIN_NET]: '',
-  [ChainId.KOVAN]: '',
   [ChainId.GOERLI]: 'goerli.',
 }
 
@@ -44,13 +41,9 @@ export function getEtherscanLink(
   type: 'transaction' | 'token' | 'address',
 ): string {
   const prefix =
-    chainId === ChainId.POLYGON
-      ? 'https://polygonscan.com'
-      : chainId === ChainId.FANTOM
+    chainId === ChainId.FANTOM
       ? 'https://ftmscan.com'
-      : `https://${
-          ETHERSCAN_PREFIXES[chainId] || ETHERSCAN_PREFIXES[ChainId.MAINNET]
-        }etherscan.io`
+      : `https://${ETHERSCAN_PREFIXES[chainId]}etherscan.io`
 
   switch (type) {
     case 'transaction': {
@@ -77,7 +70,7 @@ export function shortenAddress(address: string, padStart = 4, padEnd = padStart)
   return `${parsed.substring(0, padStart + 2)}...${parsed.substring(42 - padEnd)}`
 }
 
-export function isAddress(value: any): string | false {
+export function isAddress(value: any) {
   try {
     return getAddress(value)
   } catch {

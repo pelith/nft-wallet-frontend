@@ -1,36 +1,46 @@
-import { Web3Provider } from '@ethersproject/providers'
-import { configureChains, createClient, WagmiConfig } from 'wagmi'
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
-import { ChainId, DEFAULT_CHAIN_ID } from '@/constants/chain'
-export interface IWeb3State {
-  account: string
-  web3Provider: Web3Provider | null
-  provider: any
-  connected: boolean
-  connecting: boolean
+import { ChainId } from '@/constants/chain'
+export interface INFTWalletStore {
   chainId: ChainId
-  blockNumber: number
-  isInit: boolean
+  nftWalletAddress: string
+  isOwnerOfNFTWallet: boolean
+  importedTokenList: Record<ChainId, string[]>
 }
 
-export interface IWeb3Store extends IWeb3State {}
-const useWeb3Store = create(
+export interface IWeb3Store extends INFTWalletStore {
+  setChainId(chainId: ChainId): void
+  setNFTWalletAddress(address: string): void
+  setIsOwnerOfNFTWallet(walletAddress: string, isOwner: boolean): void
+  importTokenList(list: string[]): void
+}
+export const useNFTWalletStore = create(
   immer<IWeb3Store>((set) => ({
-    account: '',
-    web3Provider: null,
-    provider: null,
-    connected: false,
-    connecting: false,
-    chainId: DEFAULT_CHAIN_ID,
-    blockNumber: 0,
-    isInit: false,
-    updateBaseInfo() {},
+    nftWalletAddress: '',
+    isOwnerOfNFTWallet: false,
+    importedTokenList: {},
+    chainId: ChainId.FORK_MAIN_NET,
+    setChainId(chainId) {
+      set((state) => (state.chainId = chainId))
+    },
+    setNFTWalletAddress(address) {
+      set((state) => (state.nftWalletAddress = address))
+    },
+    setIsOwnerOfNFTWallet(walletAddress, isOwner) {
+      set((state) => {
+        if (state.nftWalletAddress === walletAddress) {
+          state.isOwnerOfNFTWallet = isOwner
+        }
+      })
+    },
+    importTokenList(list) {
+      set((state) => {
+        const _set = new Set([...(state.importedTokenList[state.chainId] ?? []), ...list])
+        ;(state.importedTokenList[state.chainId] ??= []).push(
+          ...[..._set].slice(state.importedTokenList[state.chainId].length),
+        )
+      })
+    },
   })),
 )
-
-// do this when load app
-
-export function basicInit() {
-}

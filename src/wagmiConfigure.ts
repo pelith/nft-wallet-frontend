@@ -1,12 +1,14 @@
 import { configureChains, createClient } from 'wagmi'
-import { fantom, goerli, mainnet } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
+
+import { USED_CHAIN_INFO } from './constants/chain'
+import { useNFTWalletStore } from './store'
 
 export const {
   chains,
   provider: web3Provider,
   webSocketProvider,
-} = configureChains([mainnet, goerli, fantom], [publicProvider()])
+} = configureChains(USED_CHAIN_INFO, [publicProvider()])
 
 export const wagmiClient = createClient({
   autoConnect: true,
@@ -14,3 +16,9 @@ export const wagmiClient = createClient({
   webSocketProvider,
 })
 wagmiClient.subscribe(console.log.bind(console))
+
+wagmiClient.subscribe((state) => {
+  if (state.data?.chain?.id) {
+    useNFTWalletStore.setState({ chainId: state.data.chain.id })
+  }
+})
