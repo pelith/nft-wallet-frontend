@@ -7,6 +7,7 @@ import {
   Input,
   Select,
   Text,
+  useClipboard,
 } from '@chakra-ui/react'
 import { AddressZero } from '@ethersproject/constants'
 import { useState } from 'react'
@@ -31,6 +32,8 @@ export default function NFTWalletConnect() {
 
   const safeAddress = isAddress(walletAddress) || AddressZero
 
+  const { onCopy, hasCopied } = useClipboard(selectedNftAddress)
+
   return (
     <Flex flexDir="column" gap="10px">
       <FormControl>
@@ -43,6 +46,12 @@ export default function NFTWalletConnect() {
           ))}
         </Select>
       </FormControl>
+      {!!selectedNftAddress && (
+        <Text onClick={onCopy} cursor="pointer">
+          selected NFT: {selectedNftAddress}
+          {hasCopied && 'copied!'}
+        </Text>
+      )}
       <Box>
         <Button onClick={mintNFT}>mint nft</Button>
         {isLoading && <Text>Loading</Text>}

@@ -7,6 +7,8 @@ export default function useNFTWalletOwner(walletAddress: string) {
     address: walletAddress as `0x${string}`,
     abi: ABINFTWallet,
     functionName: 'owner',
+    watch: true,
+    cacheOnBlock: true,
   })
 
   return {

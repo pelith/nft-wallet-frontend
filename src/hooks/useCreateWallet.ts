@@ -7,7 +7,7 @@ import {
   useTransaction,
 } from 'wagmi'
 
-import NFTFactoryAbi from '@/constants/abis/ABINFTWalletFactory' assert { type: 'json' }
+import NFTFactoryAbi from '@/constants/abis/ABINFTWalletFactory'
 
 import { NFT_FACTORY } from './../constants/nftContract'
 

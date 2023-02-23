@@ -30,6 +30,7 @@ specifiers:
   ethers: <6
   ethers-eip712: ^0.2.0
   framer-motion: ^9.0.4
+  immer: ^9.0.19
   prettier: ^2.8.4
   react: ^18.2.0
   react-dom: ^18.2.0
@@ -47,11 +48,11 @@ dependencies:
   '@ethersproject/constants': 5.7.0
   '@ethersproject/contracts': 5.7.0
   '@ethersproject/units': 5.7.0
-  '@wagmi/core': 0.9.6_sio3kkzt57fgvopk7kzuela3mu
+  '@wagmi/core': 0.9.6_go46g7a4ik46wme6uqq3vsw3qy
   framer-motion: 9.0.4_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
-  zustand: 4.3.3_react@18.2.0
+  zustand: 4.3.3_immer@9.0.19+react@18.2.0
 
 devDependencies:
   '@esbuild-plugins/node-globals-polyfill': 0.2.3
@@ -75,12 +76,13 @@ devDependencies:
   eslint-plugin-simple-import-sort: 10.0.0_eslint@8.34.0
   ethers: 5.7.2
   ethers-eip712: 0.2.0_ethers@5.7.2
+  immer: 9.0.19
   prettier: 2.8.4
   rollup-plugin-polyfill-node: 0.12.0
   typescript: 4.9.5
   vite: 4.1.1_@types+node@18.13.0
   vite-plugin-svgr: 2.4.0_vite@4.1.1
-  wagmi: 0.11.5_uvigyjn4qryq55spv6ax6k3waq
+  wagmi: 0.11.5_ottj54fewu2msvhjj7fvuinmuy
 
 packages:
 
@@ -3227,7 +3229,7 @@ packages:
       '@ledgerhq/connect-kit-loader': 1.0.2
       '@safe-global/safe-apps-provider': 0.15.2
       '@safe-global/safe-apps-sdk': 7.10.0
-      '@wagmi/core': 0.9.5_sio3kkzt57fgvopk7kzuela3mu
+      '@wagmi/core': 0.9.5_go46g7a4ik46wme6uqq3vsw3qy
       '@walletconnect/ethereum-provider': 1.8.0
       '@walletconnect/universal-provider': 2.3.3_4bewfcp2iebiwuold25d6rgcsy
       '@web3modal/standalone': 2.1.1_react@18.2.0
@@ -3267,7 +3269,7 @@ packages:
       '@ledgerhq/connect-kit-loader': 1.0.2
       '@safe-global/safe-apps-provider': 0.15.2
       '@safe-global/safe-apps-sdk': 7.10.0
-      '@wagmi/core': 0.9.6_sio3kkzt57fgvopk7kzuela3mu
+      '@wagmi/core': 0.9.6_go46g7a4ik46wme6uqq3vsw3qy
       '@walletconnect/ethereum-provider': 1.8.0
       '@walletconnect/universal-provider': 2.3.3_4bewfcp2iebiwuold25d6rgcsy
       '@web3modal/standalone': 2.1.1_react@18.2.0
@@ -3291,7 +3293,7 @@ packages:
       - zod
     dev: false
 
-  /@wagmi/core/0.9.5_sio3kkzt57fgvopk7kzuela3mu:
+  /@wagmi/core/0.9.5_go46g7a4ik46wme6uqq3vsw3qy:
     resolution: {integrity: sha512-Ff4ejQbeexH5pfcYbwYusvxcYUY1+AuKCqHyYLliOQChLvymK7QGth7Hh7lKEf1Js/g4ktHHI07EfLKHEiDYWw==}
     peerDependencies:
       ethers: '>=5.5.1 <6'
@@ -3306,7 +3308,7 @@ packages:
       ethers: 5.7.2
       eventemitter3: 4.0.7
       typescript: 4.9.5
-      zustand: 4.3.3_react@18.2.0
+      zustand: 4.3.3_immer@9.0.19+react@18.2.0
     transitivePeerDependencies:
       - '@babel/core'
       - '@react-native-async-storage/async-storage'
@@ -3324,7 +3326,7 @@ packages:
       - zod
     dev: true
 
-  /@wagmi/core/0.9.6_sio3kkzt57fgvopk7kzuela3mu:
+  /@wagmi/core/0.9.6_go46g7a4ik46wme6uqq3vsw3qy:
     resolution: {integrity: sha512-TGAnA9sNjm3s8evBVxN3yRjZqKGBlhFW1Bk2nX1C1UtlrA5uTIPDWGxHw0CAPmSnE4MLL89Um4JA12jubNqLZg==}
     peerDependencies:
       ethers: '>=5.5.1 <6'
@@ -3339,7 +3341,7 @@ packages:
       ethers: 5.7.2
       eventemitter3: 4.0.7
       typescript: 4.9.5
-      zustand: 4.3.3_react@18.2.0
+      zustand: 4.3.3_immer@9.0.19+react@18.2.0
     transitivePeerDependencies:
       - '@babel/core'
       - '@react-native-async-storage/async-storage'
@@ -5424,6 +5426,9 @@ packages:
     engines: {node: '>= 4'}
     dev: true
 
+  /immer/9.0.19:
+    resolution: {integrity: sha512-eY+Y0qcsB4TZKwgQzLaE/lqYMlKhv5J9dyd2RhhtGhNo2njPXDqU9XPfcNfa3MIDsdtZt5KlkIsirlo4dHsWdQ==}
+
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
     engines: {node: '>=6'}
@@ -5655,13 +5660,13 @@ packages:
       '@types/connect': 3.4.35
       '@types/node': 12.20.55
       '@types/ws': 7.4.7
-      JSONStream: 1.3.5
       commander: 2.20.3
       delay: 5.0.0
       es6-promisify: 5.0.0
       eyes: 0.1.8
       isomorphic-ws: 4.0.1_ws@7.4.6
       json-stringify-safe: 5.0.1
+      JSONStream: 1.3.5
       lodash: 4.17.21
       uuid: 8.3.2
       ws: 7.4.6
@@ -7084,7 +7089,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /wagmi/0.11.5_uvigyjn4qryq55spv6ax6k3waq:
+  /wagmi/0.11.5_ottj54fewu2msvhjj7fvuinmuy:
     resolution: {integrity: sha512-dd7UMMXm52K4auDdJ09PzCAHagV51G2xag92Y+vz+LUCGg/UKFqZObMywFY6SsTIpse0XMPsvmaR1FQeF5FOIw==}
     peerDependencies:
       ethers: '>=5.5.1 <6'
@@ -7097,7 +7102,7 @@ packages:
       '@tanstack/query-sync-storage-persister': 4.24.6
       '@tanstack/react-query': 4.24.6_biqbaboplfbrettd7655fr4n2y
       '@tanstack/react-query-persist-client': 4.24.6_bjksgqi67jvd6huprrxy2rqkiq
-      '@wagmi/core': 0.9.5_sio3kkzt57fgvopk7kzuela3mu
+      '@wagmi/core': 0.9.5_go46g7a4ik46wme6uqq3vsw3qy
       abitype: 0.3.0_typescript@4.9.5
       ethers: 5.7.2
       react: 18.2.0
@@ -7356,7 +7361,7 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  /zustand/4.3.3_react@18.2.0:
+  /zustand/4.3.3_immer@9.0.19+react@18.2.0:
     resolution: {integrity: sha512-x2jXq8S0kfLGNwGh87nhRfEc2eZy37tSatpSoSIN+O6HIaBhgQHSONV/F9VNrNcBcKQu/E80K1DeHDYQC/zCrQ==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
@@ -7368,5 +7373,6 @@ packages:
       react:
         optional: true
     dependencies:
+      immer: 9.0.19
       react: 18.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
