@@ -2,7 +2,7 @@ import { AddressZero, Zero } from '@ethersproject/constants'
 import { parseUnits } from '@ethersproject/units'
 import { BigNumber } from 'ethers'
 import { useMemo } from 'react'
-import { useBalance, usePrepareContractWrite } from 'wagmi'
+import { useAccount, useBalance, usePrepareContractWrite } from 'wagmi'
 import { prepareWriteContract, writeContract } from 'wagmi/actions'
 
 import ABINFTWallet from '@/constants/abis/ABINFTWallet'
@@ -12,28 +12,31 @@ import { useNFTWalletStore } from '@/store'
 
 interface IProps {
   tokenAddress: `0x${string}`
-  nftAddress: `0x${string}`
+  NFTAddress: `0x${string}`
   targetInfos: { nftIndex: string; values: string }[]
-  nftWalletAddress?: `0x${string}`
+  NFTWalletAddress?: `0x${string}`
 }
 const createUseDisperseToken = (isSimple: boolean) => {
   return function useDisperse({
     tokenAddress,
     targetInfos,
-    nftAddress,
-    nftWalletAddress,
+    NFTAddress: nftAddress,
+    NFTWalletAddress: nftWalletAddress,
   }: IProps) {
+    const { address } = useAccount()
     const isDisperseFromNFTWallet = !!nftWalletAddress
+
+    const usedAccount = nftWalletAddress ?? address
     const { data: balanceData } = useBalance({
-      address: nftWalletAddress,
+      address: usedAccount,
       watch: true,
       token: tokenAddress,
     })
 
-    const { isInsufficient, ids, values } = useMemo(() => {
+    const { isInsufficient, ids, values, sum } = useMemo(() => {
       const { sum, ids, values } = targetInfos.reduce(
         (prev, curr) => {
-          const added = parseUnits(curr.values, curr.values)
+          const added = parseUnits(curr.values, balanceData?.decimals ?? 18)
           prev.sum = prev.sum.add(added)
           prev.values.push(added)
           prev.ids.push(BigNumber.from(curr.nftIndex))
@@ -48,6 +51,7 @@ const createUseDisperseToken = (isSimple: boolean) => {
         isInsufficient,
         ids,
         values,
+        sum,
       }
     }, [...targetInfos, balanceData?.decimals, balanceData?.formatted])
     const chainId = useNFTWalletStore((state) => state.chainId)
@@ -85,11 +89,10 @@ const createUseDisperseToken = (isSimple: boolean) => {
     return {
       sendTransaction,
       isInsufficient,
+      sum,
     }
   }
 }
 
-export default {
-  useDisperseToken: createUseDisperseToken(false),
-  useDisperseTokenSimple: createUseDisperseToken(true),
-}
+export const useDisperseToken = createUseDisperseToken(false),
+  useDisperseTokenSimple = createUseDisperseToken(true)

@@ -13,6 +13,7 @@ import { AddressZero } from '@ethersproject/constants'
 import { useEffect, useState } from 'react'
 import { useNetwork } from 'wagmi'
 
+import DisperseTokenModal from './components/DisperseToken'
 import FindWalletModal from './components/FindWallet'
 import { NFT_COLLECTION } from './constants/nftColllection'
 import useMintNFT from './hooks/useMintNFT'
@@ -42,7 +43,7 @@ export default function NFTWalletConnect() {
     if (safeAddress !== AddressZero) {
       setNFTWalletAddress(safeAddress)
     }
-  }, [])
+  }, [safeAddress])
 
   return (
     <Flex flexDir="column" gap="10px">
@@ -76,7 +77,11 @@ export default function NFTWalletConnect() {
         ></Input>
       </Box>
 
-      <NFTWalletControlPanel walletAddress={safeAddress} />
+      <Box>
+        <DisperseTokenModal />
+      </Box>
+
+      <NFTWalletControlPanel NFTWalletAddress={nftWalletAddress} />
     </Flex>
   )
 }
