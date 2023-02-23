@@ -10,13 +10,14 @@ import {
   useClipboard,
 } from '@chakra-ui/react'
 import { AddressZero } from '@ethersproject/constants'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNetwork } from 'wagmi'
 
 import FindWalletModal from './components/FindWallet'
 import { NFT_COLLECTION } from './constants/nftColllection'
 import useMintNFT from './hooks/useMintNFT'
 import NFTWalletControlPanel from './NFTWalletControlPanel'
+import { useNFTWalletStore } from './store'
 import { isAddress } from './utils/web3Utils'
 
 export default function NFTWalletConnect() {
@@ -30,9 +31,18 @@ export default function NFTWalletConnect() {
 
   const [walletAddress, setWalletAddress] = useState(AddressZero)
 
+  const setNFTWalletAddress = useNFTWalletStore((state) => state.setNFTWalletAddress)
+  const nftWalletAddress = useNFTWalletStore((state) => state.nftWalletAddress)
+
   const safeAddress = isAddress(walletAddress) || AddressZero
 
   const { onCopy, hasCopied } = useClipboard(selectedNftAddress)
+
+  useEffect(() => {
+    if (safeAddress !== AddressZero) {
+      setNFTWalletAddress(safeAddress)
+    }
+  }, [])
 
   return (
     <Flex flexDir="column" gap="10px">
@@ -59,9 +69,9 @@ export default function NFTWalletConnect() {
       </Box>
 
       <Box>
-        <FindWalletModal setNFTWalletAddress={setWalletAddress} />
+        <FindWalletModal setNFTWalletAddress={setNFTWalletAddress} />
         <Input
-          value={walletAddress}
+          value={nftWalletAddress}
           onInput={(e) => setWalletAddress(e.currentTarget.value)}
         ></Input>
       </Box>
