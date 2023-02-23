@@ -1,5 +1,4 @@
 import { AddressZero } from '@ethersproject/constants'
-import { useMemo } from 'react'
 import { useContractRead, useNetwork } from 'wagmi'
 
 import NFTFactoryAbi from '@/constants/abis/ABINFTWalletFactory'
@@ -18,10 +17,7 @@ export default function useNFTWalletIsDeployed({
   walletAddress: string
   chainId?: ChainId
 }) {
-  const usedWalletAddress = useMemo(() => {
-    if (isAddress(walletAddress)) return walletAddress as `0x${string}`
-    return AddressZero
-  }, [walletAddress])
+  const usedWalletAddress = isAddress(walletAddress) || AddressZero
   const { chain } = useNetwork()
   const { data, isError, isLoading, refetch } = useContractRead({
     ...NFTFactoryContract,

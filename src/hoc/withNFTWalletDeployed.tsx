@@ -3,13 +3,13 @@ import { useNetwork } from 'wagmi'
 
 import useNFTWalletIsDeployed from '@/hooks/useNFTWalletIsDeployed'
 
-export default function withNFTWalletDeployed<T extends { walletAddress: `0x${string}` }>(
-  Component: FunctionComponent<T>,
-) {
+export default function withNFTWalletDeployed<
+  T extends { NFTWalletAddress: `0x${string}` },
+>(Component: FunctionComponent<T>) {
   const resultComponent = ({ ...props }: T) => {
     const { chain } = useNetwork()
     const { data: walletIsDeployed = false, isLoading } = useNFTWalletIsDeployed({
-      walletAddress: props.walletAddress,
+      walletAddress: props.NFTWalletAddress,
       chainId: chain!.id,
     })
 

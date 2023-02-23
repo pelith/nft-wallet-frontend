@@ -1,10 +1,12 @@
+import { AddressZero } from '@ethersproject/constants'
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
 import { ChainId } from '@/constants/chain'
+import { isAddress } from '@/utils/web3Utils'
 export interface INFTWalletStore {
   chainId: ChainId
-  nftWalletAddress: string
+  nftWalletAddress: `0x${string}`
   isOwnerOfNFTWallet: boolean
   importedTokenList: Record<ChainId, string[]>
 }
@@ -17,15 +19,20 @@ export interface IWeb3Store extends INFTWalletStore {
 }
 export const useNFTWalletStore = create(
   immer<IWeb3Store>((set) => ({
-    nftWalletAddress: '',
+    nftWalletAddress: AddressZero,
     isOwnerOfNFTWallet: false,
     importedTokenList: {},
     chainId: ChainId.FORK_MAIN_NET,
     setChainId(chainId) {
-      set((state) => (state.chainId = chainId))
+      set((state) => void (state.chainId = chainId))
     },
     setNFTWalletAddress(address) {
-      set((state) => (state.nftWalletAddress = address))
+      set((state) => {
+        const _address = isAddress(address)
+        if (_address) {
+          state.nftWalletAddress = _address
+        }
+      })
     },
     setIsOwnerOfNFTWallet(walletAddress, isOwner) {
       set((state) => {

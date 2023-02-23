@@ -14,6 +14,7 @@ import { parseUnits } from '@ethersproject/units'
 import { useMemo, useState } from 'react'
 
 import AddTokenArea from './components/AddToken'
+import DisperseTokenModal from './components/DisperseToken'
 import NumericalInput from './components/NumericalInput'
 import TokenInfo from './components/TokenInfo'
 import withNFTWalletDeployed from './hoc/withNFTWalletDeployed'
@@ -24,10 +25,12 @@ import { cutInputToDecimal } from './utils'
 import { isAddress } from './utils/web3Utils'
 
 interface INFTWalletControlPanelProps {
-  walletAddress: `0x${string}`
+  NFTWalletAddress: `0x${string}`
 }
 
-function NFTWalletControlPanel({ walletAddress }: INFTWalletControlPanelProps) {
+function NFTWalletControlPanel({
+  NFTWalletAddress: walletAddress,
+}: INFTWalletControlPanelProps) {
   const { isOwner } = useNFTWalletOwner(walletAddress)
   const tokenList = useNFTWalletStore(
     (state) => state.importedTokenList[state.chainId] ?? [],
@@ -82,6 +85,7 @@ function NFTWalletControlPanel({ walletAddress }: INFTWalletControlPanelProps) {
           you are not the owner of this NFT wallet
         </Alert>
       )}
+      {isOwner && <DisperseTokenModal NFTWalletAddress={walletAddress} />}
       <FormControl>
         <FormLabel>transfer target</FormLabel>
         <Input

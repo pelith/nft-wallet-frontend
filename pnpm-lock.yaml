@@ -13,6 +13,7 @@ specifiers:
   '@ethersproject/providers': ^5.7.2
   '@ethersproject/units': ^5.7.0
   '@pelith/ethers-multicall': ^0.2.2
+  '@types/lodash': ^4.14.191
   '@types/node': ^18.13.0
   '@types/react': ^18.0.27
   '@types/react-dom': ^18.0.10
@@ -31,6 +32,7 @@ specifiers:
   ethers-eip712: ^0.2.0
   framer-motion: ^9.0.4
   immer: ^9.0.19
+  lodash: ^4.17.21
   prettier: ^2.8.4
   react: ^18.2.0
   react-dom: ^18.2.0
@@ -50,6 +52,7 @@ dependencies:
   '@ethersproject/units': 5.7.0
   '@wagmi/core': 0.9.6_go46g7a4ik46wme6uqq3vsw3qy
   framer-motion: 9.0.4_biqbaboplfbrettd7655fr4n2y
+  lodash: 4.17.21
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   zustand: 4.3.3_immer@9.0.19+react@18.2.0
@@ -61,6 +64,7 @@ devDependencies:
   '@ethersproject/address': 5.7.0
   '@ethersproject/providers': 5.7.2
   '@pelith/ethers-multicall': 0.2.2
+  '@types/lodash': 4.14.191
   '@types/node': 18.13.0
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
@@ -3003,7 +3007,6 @@ packages:
 
   /@types/lodash/4.14.191:
     resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==}
-    dev: false
 
   /@types/node/12.20.55:
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}

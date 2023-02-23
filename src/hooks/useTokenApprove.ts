@@ -1,7 +1,8 @@
-import { MaxUint256, Zero } from '@ethersproject/constants'
+import { AddressZero, MaxUint256, Zero } from '@ethersproject/constants'
 import { BigNumberish } from 'ethers'
 import {
   erc20ABI,
+  useAccount,
   useContractRead,
   useContractWrite,
   usePrepareContractWrite,
@@ -11,26 +12,33 @@ import ABINFTWallet from '@/constants/abis/ABINFTWallet'
 
 import { ApprovalState } from './../constants/ApprovalState'
 
+interface IUseTokenApproveProps {
+  tokenAddress: `0x${string}`
+  NFTWalletAddress?: `0x${string}`
+  requiredAllowance: BigNumberish
+  spender: `0x${string}`
+}
+
 export default function useTokenApprove({
   tokenAddress,
-  walletAddress,
+  spender,
+  NFTWalletAddress,
   requiredAllowance,
-}: {
-  tokenAddress: `0x${string}`
-  walletAddress: `0x${string}`
-  requiredAllowance: BigNumberish
-}) {
+}: IUseTokenApproveProps) {
+  const { address } = useAccount()
+
+  const usedAccount = NFTWalletAddress ?? address ?? AddressZero
   const { data: contractData } = usePrepareContractWrite({
     address: tokenAddress,
     abi: erc20ABI,
     functionName: 'approve',
-    args: [walletAddress, MaxUint256],
+    args: [spender, MaxUint256],
   })
   const { config } = usePrepareContractWrite({
-    address: walletAddress,
+    address: NFTWalletAddress ?? AddressZero,
     abi: ABINFTWallet,
     functionName: 'execute',
-    args: [tokenAddress, Zero, contractData!.request.data! as `0x${string}`],
+    args: [spender, Zero, (contractData?.request?.data || '0x') as `0x${string}`],
   })
 
   const {
@@ -38,13 +46,15 @@ export default function useTokenApprove({
     data: approveTransactionData,
     isLoading: isApprovalLoading,
     isSuccess: isApprovalSuccess,
-  } = useContractWrite(config)
+  } = useContractWrite((usedAccount !== NFTWalletAddress ? config : contractData) as any)
 
   const { data: allowance, isLoading: isAllowanceLoading } = useContractRead({
     abi: erc20ABI,
     address: tokenAddress,
     functionName: 'allowance',
-    args: [walletAddress, tokenAddress],
+    args: [usedAccount, spender],
+    watch: true,
+    cacheTime: 2_000,
   })
 
   return {
