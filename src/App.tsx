@@ -5,7 +5,6 @@ import {
   useAccount,
   useConnect,
   useContractWrite,
-  useEnsName,
   useNetwork,
   usePrepareContractWrite,
   useSigner,
@@ -25,7 +24,6 @@ function App() {
   })
   const { isConnected, address } = useAccount()
   const { data: signer } = useSigner()
-  const { data: ensName } = useEnsName({ address })
   const { config, data: contractData } = usePrepareContractWrite({
     address: testToken,
     abi: TestERC20,
@@ -50,7 +48,7 @@ function App() {
       {isConnected ? (
         <>
           <button onClick={write}>Test balance</button>
-          <div>Connected to {ensName ?? address}</div>
+          <div>Connected to {address}</div>
           {chain !== undefined && chain.id !== 8787 ? (
             <Button onClick={() => switchNetwork?.(8787)}>Switch to test</Button>
           ) : chain ? (

@@ -27,27 +27,35 @@ export default function useTokenApprove({
 }: IUseTokenApproveProps) {
   const { address } = useAccount()
 
-  const usedAccount = NFTWalletAddress ?? address ?? AddressZero
-  const { data: contractData } = usePrepareContractWrite({
-    address: tokenAddress,
-    abi: erc20ABI,
-    functionName: 'approve',
-    args: [spender, MaxUint256],
-  })
-  const { config } = usePrepareContractWrite({
+  const usedAccount =
+    NFTWalletAddress && NFTWalletAddress !== AddressZero
+      ? NFTWalletAddress
+      : address ?? AddressZero
+  const { data: approveContractData, config: approveContractConfig } =
+    usePrepareContractWrite({
+      address: tokenAddress,
+      abi: erc20ABI,
+      functionName: 'approve',
+      args: [spender, MaxUint256],
+    })
+  const { config: NFTWalletApproveConfig } = usePrepareContractWrite({
     address: NFTWalletAddress ?? AddressZero,
     abi: ABINFTWallet,
     functionName: 'execute',
-    args: [spender, Zero, (contractData?.request?.data || '0x') as `0x${string}`],
+    args: [spender, Zero, (approveContractData?.request?.data || '0x') as `0x${string}`],
   })
+
+  console.log(usedAccount)
 
   const {
     write: approve,
     data: approveTransactionData,
     isLoading: isApprovalLoading,
     isSuccess: isApprovalSuccess,
-  } = useContractWrite((usedAccount !== NFTWalletAddress ? config : contractData) as any)
-
+  } = useContractWrite(
+    (usedAccount === address ? approveContractConfig : NFTWalletApproveConfig) as any,
+  )
+  console.log(usedAccount === address)
   const { data: allowance, isLoading: isAllowanceLoading } = useContractRead({
     abi: erc20ABI,
     address: tokenAddress,
@@ -55,6 +63,13 @@ export default function useTokenApprove({
     args: [usedAccount, spender],
     watch: true,
     cacheTime: 2_000,
+  })
+
+  console.table({
+    allowance: allowance?.toString(),
+    spender,
+    tokenAddress,
+    usedAccount,
   })
 
   return {

@@ -1,3 +1,4 @@
+import { useBoolean } from '@chakra-ui/react'
 import { AddressZero, Zero } from '@ethersproject/constants'
 import { parseUnits } from '@ethersproject/units'
 import { BigNumber } from 'ethers'
@@ -62,9 +63,12 @@ const createUseDisperseToken = (isSimple: boolean) => {
       args: [tokenAddress, nftAddress, ids, values],
     })
 
+    const [isLoading, { on, off }] = useBoolean(false)
+
     async function sendTransaction() {
       if (isInsufficient) return
       if (isDisperseFromNFTWallet) {
+        on()
         const walletConfig = await prepareWriteContract({
           address: nftWalletAddress,
           abi: ABINFTWallet,
@@ -78,6 +82,7 @@ const createUseDisperseToken = (isSimple: boolean) => {
 
         const result = await writeContract(walletConfig)
         await result.wait()
+        off()
         return result.hash
       } else {
         const result = await writeContract(disperseConfig)
@@ -90,6 +95,7 @@ const createUseDisperseToken = (isSimple: boolean) => {
       sendTransaction,
       isInsufficient,
       sum,
+      isLoading,
     }
   }
 }

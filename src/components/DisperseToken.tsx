@@ -48,7 +48,7 @@ function formatValidate(inputStr: string) {
 }
 
 function DisperseTokenModalContent({ NFTWalletAddress }: IDisperseTokenModalProps) {
-  const [tokenAddress, setTokenAddress] = useInputState(
+  const [tokenAddress, setTokenAddress] = useState(
     '0x4da7745993E76929Ba11fDa60cAF671e8161F0fa',
   )
   const [NFTAddress, setNFTAddress] = useInputState(
@@ -57,7 +57,7 @@ function DisperseTokenModalContent({ NFTWalletAddress }: IDisperseTokenModalProp
   const [inputData, setInputData] = useState<{ nftIndex: string; values: string }[]>([])
   const safeTokenAddress = isAddress(tokenAddress) || AddressZero
   const safeNFTCollectAddress = isAddress(NFTAddress) || AddressZero
-  const { isInsufficient, sendTransaction, sum } = useDisperseToken({
+  const { isInsufficient, sendTransaction, sum, isLoading } = useDisperseToken({
     NFTAddress: safeNFTCollectAddress,
     targetInfos: inputData,
     tokenAddress: safeTokenAddress,
@@ -101,7 +101,10 @@ function DisperseTokenModalContent({ NFTWalletAddress }: IDisperseTokenModalProp
           <FormLabel>
             Token address {formattedBalance && ` :${formattedBalance}`}
           </FormLabel>
-          <Input value={tokenAddress} onInput={setTokenAddress} />
+          <Input
+            value={tokenAddress}
+            onInput={(e) => setTokenAddress(e.currentTarget.value)}
+          />
         </FormControl>
         <FormControl>
           <FormLabel>NFT Collect Address</FormLabel>
@@ -124,6 +127,7 @@ function DisperseTokenModalContent({ NFTWalletAddress }: IDisperseTokenModalProp
             spender={NFT_FACTORY[chainId] ?? AddressZero}
             isDisabled={isInsufficient || !tokenAddress || !NFTAddress}
             onClick={sendTransaction}
+            isLoading={isLoading}
           >
             Confirm
           </AuthApproveTokenButton>
