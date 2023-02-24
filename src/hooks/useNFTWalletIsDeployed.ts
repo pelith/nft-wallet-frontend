@@ -1,35 +1,43 @@
+import { useBoolean } from '@chakra-ui/react'
 import { AddressZero } from '@ethersproject/constants'
-import { useContractRead, useNetwork } from 'wagmi'
+import { useEffect } from 'react'
+import { useProvider } from 'wagmi'
 
-import NFTFactoryAbi from '@/constants/abis/ABINFTWalletFactory'
-import { ChainId } from '@/constants/chain'
-import { NFT_FACTORY } from '@/constants/nftContract'
 import { isAddress } from '@/utils/web3Utils'
-
-const NFTFactoryContract = {
-  abi: NFTFactoryAbi,
-}
 
 export default function useNFTWalletIsDeployed({
   walletAddress,
-  chainId,
 }: {
   walletAddress: string
-  chainId?: ChainId
 }) {
   const usedWalletAddress = isAddress(walletAddress) || AddressZero
-  const { chain } = useNetwork()
-  const { data, isError, isLoading, refetch } = useContractRead({
-    ...NFTFactoryContract,
-    address: NFT_FACTORY[chainId ?? chain!.id] ?? AddressZero,
-    functionName: 'getDeployedWalletInfo',
-    args: [usedWalletAddress],
-    cacheOnBlock: true,
-  })
+  const provider = useProvider()
+  const [isLoading, setIsLoading] = useBoolean()
+  const [isDeployed, setIsDeployed] = useBoolean()
+  function refetch() {}
+
+  useEffect(() => {
+    if (usedWalletAddress !== AddressZero) {
+      setIsLoading.on()
+      provider
+        .getCode(usedWalletAddress)
+        .then((res) => {
+          if (res === '0x') {
+            setIsDeployed.off()
+          } else {
+            setIsDeployed.on()
+          }
+        })
+        .finally(() => {
+          setIsLoading.off()
+        })
+    } else {
+      setIsDeployed.off()
+    }
+  }, [usedWalletAddress])
 
   return {
-    data: data?.nft && data.nft !== AddressZero ? data : false,
-    isError,
+    isDeployed: isDeployed,
     isLoading,
     refetch,
   }

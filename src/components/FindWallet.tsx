@@ -3,6 +3,8 @@ import {
   Box,
   Button,
   Flex,
+  FormControl,
+  FormLabel,
   Input,
   Modal,
   ModalBody,
@@ -10,6 +12,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Select,
   Text,
   useDisclosure,
 } from '@chakra-ui/react'
@@ -17,6 +20,7 @@ import { AddressZero } from '@ethersproject/constants'
 import { useState } from 'react'
 import { useNetwork } from 'wagmi'
 
+import { NFT_COLLECTION } from '@/constants/nftColllection'
 import useCreateWallet from '@/hooks/useCreateWallet'
 import useNFTWalletIsDeployed from '@/hooks/useNFTWalletIsDeployed'
 import { getNFTWalletAddress } from '@/utils/getNFTWalletInfo'
@@ -47,20 +51,20 @@ function ButtonOfCreateWallet({ nftAddress, nftIndex }: IButtonOfCreateWalletPro
 }
 
 export default function FindWalletModal({ setNFTWalletAddress }: IFindWalletModalProps) {
-  const [nftAddress, setNFTAddress] = useState('')
   const [nftIndex, setNftIndex] = useState(0)
 
   const [walletAddress, setWalletAddress] = useState(AddressZero)
 
   const { chain } = useNetwork()
+  const nftSeeds = NFT_COLLECTION[chain!.id] ?? []
+  const [nftAddress, setNFTAddress] = useState(nftSeeds[0])
   const safeWallet = isAddress(walletAddress) || AddressZero
   const {
-    data: walletIsDeployed = false,
+    isDeployed: walletIsDeployed = false,
     isLoading,
     refetch,
   } = useNFTWalletIsDeployed({
     walletAddress: safeWallet,
-    chainId: chain!.id,
   })
 
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -93,10 +97,16 @@ export default function FindWalletModal({ setNFTWalletAddress }: IFindWalletModa
           <ModalHeader>Find Wallet address by nft</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Input
-              placeholder="nft address"
-              onChange={(e) => setNFTAddress(e.currentTarget.value)}
-            />
+            <FormControl>
+              <FormLabel>Select nft collection</FormLabel>
+              <Select onChange={(e) => setNFTAddress(e.currentTarget.value as any)}>
+                {nftSeeds.map((ele) => (
+                  <option value={ele} key={ele}>
+                    {ele}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
             <Input
               placeholder="nft index"
               onChange={(e) => setNftIndex(+e.currentTarget.value)}
