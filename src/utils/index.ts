@@ -1,3 +1,8 @@
+import cond from 'lodash/cond'
+import constant from 'lodash/constant'
+import eq from 'lodash/fp/eq'
+import stubTrue from 'lodash/stubTrue'
+
 export const cutInputToDecimal = (input: string, decimals?: number) => {
   if (!decimals) {
     return input
@@ -13,3 +18,10 @@ export const cutInputToDecimal = (input: string, decimals?: number) => {
 export function escapeRegExp(string: string): string {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
 }
+
+export const statusValidate = cond<string, string | false>([
+  [eq('success'), constant('success')],
+  [eq('loading'), constant('loading')],
+  [eq('error'), constant('error')],
+  [stubTrue, constant(false)],
+])

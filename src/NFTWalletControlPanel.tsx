@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react'
 import { AddressZero, Zero } from '@ethersproject/constants'
 import { parseUnits } from '@ethersproject/units'
+import { BigNumber } from 'ethers'
 import { useMemo, useState } from 'react'
 
 import AddTokenArea from './components/AddToken'
@@ -37,8 +38,14 @@ function NFTWalletControlPanel({
   )
   const commonActionButtonDisabled = !isOwner
 
-  const [selectedInfo, setSelectedInfo] = useState({
-    tokenAddress: AddressZero,
+  const [selectedInfo, setSelectedInfo] = useState<{
+    tokenAddress?: `0x${string}`
+    balance: BigNumber
+    symbol: string
+    formatted: string
+    decimals: number
+  }>({
+    tokenAddress: undefined as undefined | `0x${string}`,
     balance: Zero,
     symbol: '',
     formatted: '',
@@ -54,21 +61,21 @@ function NFTWalletControlPanel({
     [safeInput, selectedInfo.decimals],
   )
 
-  const usedTokenAddress = isAddress(selectedInfo.tokenAddress) || AddressZero
+  const usedTokenAddress = isAddress(selectedInfo.tokenAddress) || undefined
   const usedTargetWallet = isAddress(targetWallet) || AddressZero
 
   const { transfer, isLoading } = useTokenTransfer(
     walletAddress,
-    usedTokenAddress,
     usedTargetWallet,
     safeInputBigNumber,
+    usedTokenAddress,
   )
 
   const transferButtonDisabled =
     commonActionButtonDisabled ||
     isLoading ||
     selectedInfo.balance.lt(safeInputBigNumber) ||
-    usedTokenAddress === AddressZero ||
+    selectedInfo.balance.eq(Zero) ||
     usedTargetWallet === AddressZero
 
   return (
@@ -114,6 +121,11 @@ function NFTWalletControlPanel({
       </Button>
       <AddTokenArea />
       <Flex flexDir="column">
+        <TokenInfo
+          onSelect={setSelectedInfo}
+          selected={selectedInfo.tokenAddress === undefined}
+          walletAddress={walletAddress}
+        />
         {tokenList.map((token) => (
           <TokenInfo
             onSelect={setSelectedInfo}

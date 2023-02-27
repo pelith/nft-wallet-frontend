@@ -6,10 +6,10 @@ import { useBalance, useToken } from 'wagmi'
 
 interface ITokenInfoProps {
   walletAddress: `0x${string}`
-  tokenAddress: `0x${string}`
+  tokenAddress?: `0x${string}`
   selected: boolean
   onSelect(params: {
-    tokenAddress: `0x${string}`
+    tokenAddress?: `0x${string}`
     balance: BigNumber
     formatted: string
     symbol: string
@@ -36,15 +36,15 @@ function TokenInfo({ walletAddress, tokenAddress, selected, onSelect }: ITokenIn
         onSelect({
           tokenAddress,
           balance: balanceData?.value ?? Zero,
-          symbol: tokenData?.symbol ?? '',
+          symbol: tokenData?.symbol || 'ETH',
           formatted: balanceData?.formatted ?? '',
           decimals: tokenData?.decimals ?? 18,
         })
       }
       cursor="pointer"
     >
-      <Box>name: {tokenData?.name}</Box>
-      <Box>symbol: {tokenData?.symbol}</Box>
+      <Box>name: {tokenData?.name || 'ETH'}</Box>
+      <Box>symbol: {tokenData?.symbol || 'ETH'}</Box>
       <Box>balance: {balanceData?.formatted}</Box>
     </Flex>
   )
