@@ -26,6 +26,8 @@ import useNFTWalletIsDeployed from '@/hooks/useNFTWalletIsDeployed'
 import { getNFTWalletAddress } from '@/utils/getNFTWalletInfo'
 import { isAddress } from '@/utils/web3Utils'
 
+import WalletImagePreview from './WalletImagePreview'
+
 interface IFindWalletModalProps {
   setNFTWalletAddress(val: string): void
 }
@@ -118,6 +120,7 @@ export default function FindWalletModal({ setNFTWalletAddress }: IFindWalletModa
                 <Box>
                   <Text>Wallet Address</Text>
                   <Text>{walletAddress}</Text>
+                  <WalletImagePreview nftAddress={nftAddress} nftId={nftIndex} />
                 </Box>
                 <Box>
                   {isLoading ? (
