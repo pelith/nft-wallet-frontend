@@ -14,9 +14,7 @@ export default function useNFTWalletIsDeployed({
   const provider = useProvider()
   const [isLoading, setIsLoading] = useBoolean()
   const [isDeployed, setIsDeployed] = useBoolean()
-  function refetch() {}
-
-  useEffect(() => {
+  function refetch() {
     if (usedWalletAddress !== AddressZero) {
       setIsLoading.on()
       provider
@@ -34,6 +32,10 @@ export default function useNFTWalletIsDeployed({
     } else {
       setIsDeployed.off()
     }
+  }
+
+  useEffect(() => {
+    refetch()
   }, [usedWalletAddress])
 
   return {

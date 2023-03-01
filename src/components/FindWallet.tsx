@@ -101,7 +101,16 @@ export default function FindWalletModal({ setNFTWalletAddress }: IFindWalletModa
           <ModalBody>
             <FormControl>
               <FormLabel>Select nft collection</FormLabel>
-              <Select onChange={(e) => setNFTInfo(e.currentTarget.value as any)}>
+              <Select
+                onChange={(e) => {
+                  console.log(e.currentTarget.value)
+                  setNFTInfo(
+                    nftSeeds.find(
+                      (ele) => ele.address === (e.currentTarget.value as any),
+                    )!,
+                  )
+                }}
+              >
                 {nftSeeds.map((ele) => (
                   <option value={ele.address} key={ele.address}>
                     {ele.name}
