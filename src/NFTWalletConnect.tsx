@@ -27,7 +27,7 @@ export default function NFTWalletConnect() {
   const [selectedNftAddress, setSelectedNFTAddress] = useState(nftSeeds[0])
 
   const { mintNFT, data, isLoading, isSuccess } = useMintNFT(
-    selectedNftAddress || AddressZero,
+    selectedNftAddress.address || AddressZero,
   )
 
   const [walletAddress, setWalletAddress] = useState(AddressZero)
@@ -37,7 +37,7 @@ export default function NFTWalletConnect() {
 
   const safeAddress = isAddress(walletAddress) || AddressZero
 
-  const { onCopy, hasCopied } = useClipboard(selectedNftAddress)
+  const { onCopy, hasCopied } = useClipboard(selectedNftAddress.address)
 
   useEffect(() => {
     if (safeAddress !== AddressZero) {
@@ -51,15 +51,15 @@ export default function NFTWalletConnect() {
         <FormLabel>Select nft collection</FormLabel>
         <Select onChange={(e) => setSelectedNFTAddress(e.currentTarget.value as any)}>
           {nftSeeds.map((ele) => (
-            <option value={ele} key={ele}>
-              {ele}
+            <option value={ele.address} key={ele.address}>
+              {ele.address}
             </option>
           ))}
         </Select>
       </FormControl>
       {!!selectedNftAddress && (
         <Text onClick={onCopy} cursor="pointer">
-          selected NFT: {selectedNftAddress}
+          selected NFT: {selectedNftAddress.name} {selectedNftAddress.address}
           {hasCopied && 'copied!'}
         </Text>
       )}
