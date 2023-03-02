@@ -25,3 +25,38 @@ export const statusValidate = cond<string, string | false>([
   [eq('error'), constant('error')],
   [stubTrue, constant(false)],
 ])
+
+function getCommonDecimal(amount: number) {
+  if (amount < 1) return 6
+  if (amount < 10) return 5
+  if (amount < 100) return 4
+  if (amount < 1000) return 3
+  return 2
+}
+
+function formatNumberWithCommas(n: number) {
+  const parts = n.toString().split('.')
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  return parts.join('.')
+}
+
+export function formatNumber(amount: number | string | undefined, toFixedValue?: number) {
+  const processAmount = typeof amount === 'string' ? parseFloat(amount) : amount
+  if (processAmount == null || isNaN(processAmount)) {
+    return '-'
+  } else {
+    return toFixedValue
+      ? formatNumberWithCommas(parseFloat(processAmount.toFixed(toFixedValue)))
+      : formatNumberWithCommas(processAmount)
+  }
+}
+
+export function formatCommonNumber(amount: number | string | undefined) {
+  const processAmount = typeof amount === 'string' ? parseFloat(amount) : amount
+  if (processAmount == null || isNaN(processAmount)) {
+    return '-'
+  }
+  if (processAmount === 0) return '0'
+  if (processAmount < 0.000001) return '<0.000001'
+  return formatNumber(processAmount, getCommonDecimal(processAmount))
+}

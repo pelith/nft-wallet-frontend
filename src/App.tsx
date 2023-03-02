@@ -1,41 +1,11 @@
-import { Button } from '@chakra-ui/react'
-import { useAccount, useConnect, useNetwork, useSwitchNetwork } from 'wagmi'
-import { InjectedConnector } from 'wagmi/connectors/injected'
+import { useRoutes } from 'react-router-dom'
 
-import NFTWalletConnect from './NFTWalletConnect'
+import { routes } from './constants/router'
 import { wagmiClient } from './wagmiConfigure'
 wagmiClient.connector?.getSigner({ chainId: 5 })
 function App() {
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  })
-  const { isConnected, address } = useAccount()
-
-  const { chain } = useNetwork()
-
-  const { switchNetwork } = useSwitchNetwork()
-
-  return (
-    <>
-      {isConnected ? (
-        <>
-          <div>Connected to {address}</div>
-          {chain !== undefined && chain.id !== 8787 ? (
-            <Button onClick={() => switchNetwork?.(8787)}>Switch to test</Button>
-          ) : chain ? (
-            <>
-              current on {chain.id} {chain?.name}
-              <NFTWalletConnect />
-            </>
-          ) : (
-            <></>
-          )}
-        </>
-      ) : (
-        <button onClick={() => connect()}>connect</button>
-      )}
-    </>
-  )
+  const routesEle = useRoutes(routes)
+  return <>{routesEle}</>
 }
 
 export default App
