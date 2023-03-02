@@ -1,6 +1,6 @@
 import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi'
 
-import NFTAbi from '@/constants/abis/ABINFT'
+import NFTAbi from '@/constants/abis/ABINFTSample'
 import { NFTCollectionInfo } from '@/constants/nftCollection'
 
 export default function useMintNFT(nftAddress: `0x${string}`) {

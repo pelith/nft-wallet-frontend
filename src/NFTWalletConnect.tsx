@@ -17,7 +17,7 @@ import { useAccount, useContractEvent, useContractRead, useNetwork } from 'wagmi
 import DisperseTokenModal from './components/DisperseToken'
 import FindWalletModal from './components/FindWallet'
 import ABINFTRarity from './constants/abis/ABINFTRarity'
-import { NFT_COLLECTION, NFTCollectionInfo } from './constants/nftColllection'
+import { NFT_COLLECTION, NFTCollectionInfo } from './constants/nftCollection'
 import useMintNFT from './hooks/useMintNFT'
 import NFTWalletControlPanel from './NFTWalletControlPanel'
 import { useNFTWalletStore } from './store'

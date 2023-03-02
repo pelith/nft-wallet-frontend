@@ -42,13 +42,13 @@ export default [
       {
         indexed: true,
         internalType: 'address',
-        name: 'spender',
+        name: 'approved',
         type: 'address',
       },
       {
         indexed: true,
         internalType: 'uint256',
-        name: 'id',
+        name: 'tokenId',
         type: 'uint256',
       },
     ],
@@ -117,7 +117,7 @@ export default [
       {
         indexed: true,
         internalType: 'uint256',
-        name: 'id',
+        name: 'tokenId',
         type: 'uint256',
       },
     ],
@@ -141,12 +141,12 @@ export default [
     inputs: [
       {
         internalType: 'address',
-        name: 'spender',
+        name: 'to',
         type: 'address',
       },
       {
         internalType: 'uint256',
-        name: 'id',
+        name: 'tokenId',
         type: 'uint256',
       },
     ],
@@ -204,7 +204,7 @@ export default [
     inputs: [
       {
         internalType: 'uint256',
-        name: '',
+        name: 'tokenId',
         type: 'uint256',
       },
     ],
@@ -223,12 +223,12 @@ export default [
     inputs: [
       {
         internalType: 'address',
-        name: '',
+        name: 'owner',
         type: 'address',
       },
       {
         internalType: 'address',
-        name: '',
+        name: 'operator',
         type: 'address',
       },
     ],
@@ -292,7 +292,7 @@ export default [
     inputs: [
       {
         internalType: 'uint256',
-        name: 'id',
+        name: 'tokenId',
         type: 'uint256',
       },
     ],
@@ -300,7 +300,7 @@ export default [
     outputs: [
       {
         internalType: 'address',
-        name: 'owner',
+        name: '',
         type: 'address',
       },
     ],
@@ -328,7 +328,7 @@ export default [
       },
       {
         internalType: 'uint256',
-        name: 'id',
+        name: 'tokenId',
         type: 'uint256',
       },
     ],
@@ -351,7 +351,7 @@ export default [
       },
       {
         internalType: 'uint256',
-        name: 'id',
+        name: 'tokenId',
         type: 'uint256',
       },
       {
@@ -419,6 +419,49 @@ export default [
     inputs: [
       {
         internalType: 'uint256',
+        name: 'index',
+        type: 'uint256',
+      },
+    ],
+    name: 'tokenByIndex',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'index',
+        type: 'uint256',
+      },
+    ],
+    name: 'tokenOfOwnerByIndex',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
         name: 'tokenId',
         type: 'uint256',
       },
@@ -429,6 +472,19 @@ export default [
         internalType: 'string',
         name: '',
         type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -448,7 +504,7 @@ export default [
       },
       {
         internalType: 'uint256',
-        name: 'id',
+        name: 'tokenId',
         type: 'uint256',
       },
     ],
