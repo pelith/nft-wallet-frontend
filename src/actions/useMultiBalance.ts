@@ -1,10 +1,10 @@
 import { formatUnits } from '@ethersproject/units'
-import { FetchBalanceArgs, FetchBalanceResult } from '@wagmi/core'
 import { BigNumber } from 'ethers'
 import chunk from 'lodash/chunk'
 import { useMemo } from 'react'
 import { useBalance, useBlockNumber, useChainId, useQuery, useQueryClient } from 'wagmi'
 import { ContractResultDecodeError, erc20ABI, readContracts } from 'wagmi'
+import { FetchBalanceArgs, FetchBalanceResult } from 'wagmi/actions'
 interface MultiFetchProps extends Omit<FetchBalanceArgs, 'token'> {
   tokens: `0x${string}`[]
 }

@@ -20,7 +20,7 @@ import { AddressZero } from '@ethersproject/constants'
 import { useState } from 'react'
 import { useNetwork } from 'wagmi'
 
-import { NFT_COLLECTION } from '@/constants/nftColllection'
+import { NFT_COLLECTION } from '@/constants/nftCollection'
 import useCreateWallet from '@/hooks/useCreateWallet'
 import useNFTWalletIsDeployed from '@/hooks/useNFTWalletIsDeployed'
 import { getNFTWalletAddress } from '@/utils/getNFTWalletInfo'
@@ -59,7 +59,7 @@ export default function FindWalletModal({ setNFTWalletAddress }: IFindWalletModa
 
   const { chain } = useNetwork()
   const nftSeeds = NFT_COLLECTION[chain!.id] ?? []
-  const [nftAddress, setNFTAddress] = useState(nftSeeds[0])
+  const [nftInfo, setNFTInfo] = useState(nftSeeds[0])
   const safeWallet = isAddress(walletAddress) || AddressZero
   const {
     isDeployed: walletIsDeployed = false,
@@ -76,7 +76,7 @@ export default function FindWalletModal({ setNFTWalletAddress }: IFindWalletModa
     if (!chainId) return
     if (walletAddress.startsWith('0x') && nftIndex !== 0) {
       const data = await getNFTWalletAddress({
-        nftAddress: nftAddress as `0x${string}`,
+        nftAddress: nftInfo.address as `0x${string}`,
         index: nftIndex,
         chainId,
       })
@@ -101,10 +101,19 @@ export default function FindWalletModal({ setNFTWalletAddress }: IFindWalletModa
           <ModalBody>
             <FormControl>
               <FormLabel>Select nft collection</FormLabel>
-              <Select onChange={(e) => setNFTAddress(e.currentTarget.value as any)}>
+              <Select
+                onChange={(e) => {
+                  console.log(e.currentTarget.value)
+                  setNFTInfo(
+                    nftSeeds.find(
+                      (ele) => ele.address === (e.currentTarget.value as any),
+                    )!,
+                  )
+                }}
+              >
                 {nftSeeds.map((ele) => (
-                  <option value={ele} key={ele}>
-                    {ele}
+                  <option value={ele.address} key={ele.address}>
+                    {ele.name}
                   </option>
                 ))}
               </Select>
@@ -120,7 +129,7 @@ export default function FindWalletModal({ setNFTWalletAddress }: IFindWalletModa
                 <Box>
                   <Text>Wallet Address</Text>
                   <Text>{walletAddress}</Text>
-                  <WalletImagePreview nftAddress={nftAddress} nftId={nftIndex} />
+                  <WalletImagePreview nftAddress={nftInfo.address} nftId={nftIndex} />
                 </Box>
                 <Box>
                   {isLoading ? (
@@ -134,7 +143,7 @@ export default function FindWalletModal({ setNFTWalletAddress }: IFindWalletModa
                       )}
                       {!walletIsDeployed && (
                         <ButtonOfCreateWallet
-                          nftAddress={nftAddress}
+                          nftAddress={nftInfo.address}
                           nftIndex={nftIndex}
                         />
                       )}

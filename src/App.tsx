@@ -1,43 +1,15 @@
 import { Button } from '@chakra-ui/react'
-import { parseUnits } from 'ethers/lib/utils'
-import { useEffect } from 'react'
-import {
-  useAccount,
-  useConnect,
-  useContractWrite,
-  useNetwork,
-  usePrepareContractWrite,
-  useSigner,
-  useSwitchNetwork,
-} from 'wagmi'
+import { useAccount, useConnect, useNetwork, useSwitchNetwork } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
-
-import TestERC20 from '@/constants/abis/testERC20.json'
 
 import NFTWalletConnect from './NFTWalletConnect'
 import { wagmiClient } from './wagmiConfigure'
-const testToken = '0xC7b980b118f39F5ffF64d19FaAf137061aa993d3'
 wagmiClient.connector?.getSigner({ chainId: 5 })
 function App() {
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   })
   const { isConnected, address } = useAccount()
-  const { data: signer } = useSigner()
-  const { config, data: contractData } = usePrepareContractWrite({
-    address: testToken,
-    abi: TestERC20,
-    functionName: 'mint',
-    args: [address, parseUnits('10')],
-    signer,
-  })
-
-  const { data, write } = useContractWrite(config)
-
-  useEffect(() => {
-    console.log(data)
-    console.log(contractData?.request.data)
-  }, [data])
 
   const { chain } = useNetwork()
 
@@ -47,7 +19,6 @@ function App() {
     <>
       {isConnected ? (
         <>
-          <button onClick={write}>Test balance</button>
           <div>Connected to {address}</div>
           {chain !== undefined && chain.id !== 8787 ? (
             <Button onClick={() => switchNetwork?.(8787)}>Switch to test</Button>

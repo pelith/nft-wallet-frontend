@@ -10,22 +10,36 @@ export interface INFTWalletStore {
   nftWalletAddress: `0x${string}`
   isOwnerOfNFTWallet: boolean
   importedTokenList: Record<ChainId, string[]>
+
+  nftAddress: `0x${string}`
+  nftIndex: number
 }
 export interface IWeb3Store extends INFTWalletStore {
   setChainId(chainId: ChainId): void
   setNFTWalletAddress(address: string): void
+  setNFTSelected(address: string, nftIndex: number): void
   setIsOwnerOfNFTWallet(walletAddress: string, isOwner: boolean): void
   importTokenList(list: string[]): void
 }
 export const useNFTWalletStore = create(
   persist(
     immer<IWeb3Store>((set) => ({
+      nftAddress: AddressZero,
+      nftIndex: 0,
       nftWalletAddress: AddressZero,
       isOwnerOfNFTWallet: false,
       importedTokenList: {},
       chainId: ChainId.FORK_MAIN_NET,
       setChainId(chainId) {
         set((state) => void (state.chainId = chainId))
+      },
+      setNFTSelected(address, nftIndex) {
+        set((state) => {
+          if (isAddress(address)) {
+            state.nftAddress = address as `0x${string}`
+            state.nftIndex = nftIndex
+          }
+        })
       },
       setNFTWalletAddress(address) {
         set((state) => {
