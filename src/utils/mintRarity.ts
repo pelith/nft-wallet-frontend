@@ -2,7 +2,7 @@ import { BigNumber } from 'ethers'
 import { prepareWriteContract, watchContractEvent, writeContract } from 'wagmi/actions'
 
 import ABINFTRarity from '@/constants/abis/ABINFTRarity'
-import { NFTCollectionInfo } from '@/constants/nftColllection'
+import { NFTCollectionInfo } from '@/constants/nftCollection'
 
 import { useTransactionHistoryStore } from './../store/transactionHistory'
 

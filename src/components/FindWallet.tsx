@@ -20,7 +20,7 @@ import { AddressZero } from '@ethersproject/constants'
 import { useState } from 'react'
 import { useNetwork } from 'wagmi'
 
-import { NFT_COLLECTION } from '@/constants/nftColllection'
+import { NFT_COLLECTION } from '@/constants/nftCollection'
 import useCreateWallet from '@/hooks/useCreateWallet'
 import useNFTWalletIsDeployed from '@/hooks/useNFTWalletIsDeployed'
 import { getNFTWalletAddress } from '@/utils/getNFTWalletInfo'
