@@ -7,6 +7,11 @@ export interface NFTCollection {
   imageLoader?: (data: string) => string
 }
 
+export const SAMPLE_NFT_ADDRESS: Record<ChainId, `0x${string}`> = {
+  [ChainId.FORK_MAIN_NET]: '0x1dB5928284301FE16a703543Ac3e1fA6B15E8d93',
+  [ChainId.FANTOM]: '0x1dB5928284301FE16a703543Ac3e1fA6B15E8d93',
+}
+
 export const NFT_COLLECTION: Record<ChainId, NFTCollection[]> = {
   [ChainId.FORK_MAIN_NET]: [
     {
@@ -16,7 +21,7 @@ export const NFT_COLLECTION: Record<ChainId, NFTCollection[]> = {
     },
     {
       name: 'sample',
-      address: '0x1dB5928284301FE16a703543Ac3e1fA6B15E8d93',
+      address: SAMPLE_NFT_ADDRESS[ChainId.FORK_MAIN_NET] || '',
     },
   ],
   [ChainId.FANTOM]: [
@@ -27,7 +32,7 @@ export const NFT_COLLECTION: Record<ChainId, NFTCollection[]> = {
     },
     {
       name: 'sample',
-      address: '0x1dB5928284301FE16a703543Ac3e1fA6B15E8d93',
+      address: SAMPLE_NFT_ADDRESS[ChainId.FANTOM] || '',
     },
   ],
 }
