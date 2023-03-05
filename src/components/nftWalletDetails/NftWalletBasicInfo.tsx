@@ -1,7 +1,9 @@
 /* eslint-disable no-undef */
 import { Box, Divider, Flex, Grid, GridItem } from '@chakra-ui/react'
+import { useEffect } from 'react'
 import { useAccount } from 'wagmi'
 
+import useNFTWalletIsDeployed from '@/hooks/useNFTWalletIsDeployed'
 import { nftWalletsStore } from '@/store/nftWallet'
 
 import WalletImagePreview from '../WalletImagePreview'
@@ -16,6 +18,20 @@ const NftWalletBasicInfo = ({ nftAddress, nftId }: Props) => {
 
   const { address } = useAccount()
   const isOwned = address === walletInfo.ownedBy
+
+  const { isDeployed } = useNFTWalletIsDeployed({
+    walletAddress: walletInfo.walletAddress,
+  })
+
+  useEffect(() => {
+    if (isDeployed) {
+      nftWalletsStore.set.updateNFTWalletDeployedMessage({
+        nftAddress,
+        id: nftId,
+        isDeployed,
+      })
+    }
+  }, [isDeployed, nftAddress, nftId])
 
   return (
     <Flex direction="column">

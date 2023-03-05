@@ -41,7 +41,13 @@ const CommonInput = ({
           ))}
         </Select>
       ) : (
-        <Input flex={5} value={value} onChange={onChange} />
+        <Input
+          autoComplete="off"
+          autoCorrect="off"
+          flex={5}
+          value={value}
+          onChange={onChange}
+        />
       )}
     </Flex>
   )

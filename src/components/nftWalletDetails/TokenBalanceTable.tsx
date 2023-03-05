@@ -10,6 +10,7 @@ import {
   Tooltip,
   Tr,
 } from '@chakra-ui/react'
+import { AddressZero } from '@ethersproject/constants'
 import React from 'react'
 import { useBalance } from 'wagmi'
 
@@ -29,6 +30,7 @@ const TokenBalanceTable = ({ nftWalletKey }: Props) => {
     tokens: tokens.map(([, e]) => e.address),
     watch: true,
     staleTime: 5_000,
+    enabled: walletInfo.walletAddress !== AddressZero,
   })
 
   const { data: nativeBalance } = useBalance({
@@ -61,11 +63,17 @@ const TokenBalanceTable = ({ nftWalletKey }: Props) => {
             )
           })}
         </Tbody>
-        <Tfoot display="flex" p="10px" justifyContent="space-around" w="full">
-          <TokenImportButton />
-          <Button rounded="1.5rem" size="sm">
-            Transfer with NFT Wallet
-          </Button>
+        <Tfoot display="flex" p="10px" w="full">
+          <Tr>
+            <Td>
+              <TokenImportButton />
+            </Td>
+            <Td>
+              <Button rounded="1.5rem" size="sm">
+                Transfer with NFT Wallet
+              </Button>
+            </Td>
+          </Tr>
         </Tfoot>
       </Table>
     </TableContainer>
