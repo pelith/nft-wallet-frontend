@@ -13,6 +13,7 @@ import { AddressZero, Zero } from '@ethersproject/constants'
 import { parseUnits } from '@ethersproject/units'
 import { BigNumber } from 'ethers'
 import { useMemo, useState } from 'react'
+import { useAccount } from 'wagmi'
 
 import AddTokenArea from './components/AddToken'
 import DisperseTokenModal from './components/DisperseToken'
@@ -32,11 +33,12 @@ interface INFTWalletControlPanelProps {
 function NFTWalletControlPanel({
   NFTWalletAddress: walletAddress,
 }: INFTWalletControlPanelProps) {
-  const { isOwner } = useNFTWalletOwner(walletAddress)
+  const { ownedBy } = useNFTWalletOwner(walletAddress)
+  const { address } = useAccount()
   const tokenList = useNFTWalletStore(
     (state) => state.importedTokenList[state.chainId] ?? [],
   )
-  const commonActionButtonDisabled = !isOwner
+  const commonActionButtonDisabled = ownedBy !== address
 
   const [selectedInfo, setSelectedInfo] = useState<{
     tokenAddress?: `0x${string}`
@@ -81,7 +83,7 @@ function NFTWalletControlPanel({
   return (
     <Box>
       <Text>Wallet Address: {walletAddress} </Text>
-      {isOwner ? (
+      {ownedBy ? (
         <Alert status="success">
           <AlertIcon />
           you are the owner of this NFT wallet
@@ -92,7 +94,7 @@ function NFTWalletControlPanel({
           you are not the owner of this NFT wallet
         </Alert>
       )}
-      {isOwner && <DisperseTokenModal NFTWalletAddress={walletAddress} />}
+      {ownedBy && <DisperseTokenModal NFTWalletAddress={walletAddress} />}
       <FormControl>
         <FormLabel>transfer target</FormLabel>
         <Input

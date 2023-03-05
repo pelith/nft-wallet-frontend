@@ -1,26 +1,29 @@
-import { Grid, GridItem } from '@chakra-ui/react'
-import React from 'react'
-
-import getRarityImage from '@/utils/getRarityImage'
+import { ChevronLeftIcon } from '@chakra-ui/icons'
+import { Center, Grid, GridItem } from '@chakra-ui/react'
+import { useParams } from 'react-router-dom'
 
 import NftWalletBasicInfo from './NftWalletBasicInfo'
 import NftWalletTransactionDetail from './NftWalletTransactionDetail'
 import TokenBalanceTable from './TokenBalanceTable'
 
+function back() {
+  window.history.back()
+}
+
 const NftWalletDetails = () => {
+  const { nftAddress, nftIndex } = useParams<{ nftAddress: string; nftIndex: string }>()
+
   return (
-    <Grid templateColumns="4fr 3fr" gap={6}>
+    <Grid pos="relative" templateColumns="4fr 3fr" gap={6} pt="50px">
+      <Center cursor="pointer" pos="absolute" top="10px" left="0" onClick={back}>
+        <ChevronLeftIcon />
+        back
+      </Center>
       <GridItem>
-        <NftWalletBasicInfo
-          nftData={{
-            name: 'Rarity',
-            address: '0xce761D788DF608BD21bdd59d6f4B54b2e27F25Bb',
-            imageLoader: getRarityImage,
-          }}
-        />
+        <NftWalletBasicInfo nftAddress={nftAddress as `0x${string}`} nftId={+nftIndex!} />
       </GridItem>
       <GridItem>
-        <TokenBalanceTable tokenList={[]} />
+        <TokenBalanceTable nftWalletKey={`${nftAddress}/${nftIndex}`} />
       </GridItem>
       <GridItem colSpan={2}>
         <NftWalletTransactionDetail />

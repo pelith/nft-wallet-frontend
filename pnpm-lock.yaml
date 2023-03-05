@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@chakra-ui/icons': ^2.0.17
   '@chakra-ui/react': ^2.5.1
   '@emotion/react': ^11.10.6
   '@emotion/styled': ^11.10.6
@@ -19,6 +20,7 @@ specifiers:
   '@types/react-dom': ^18.0.10
   '@typescript-eslint/eslint-plugin': ^5.52.0
   '@typescript-eslint/parser': ^5.52.0
+  '@udecode/zustood': ^1.1.3
   '@vitejs/plugin-react': ^3.1.0
   '@wagmi/core': ^0.9.6
   eslint: ^8.34.0
@@ -45,12 +47,14 @@ specifiers:
   zustand: ^4.3.3
 
 dependencies:
+  '@chakra-ui/icons': 2.0.17_react@18.2.0
   '@chakra-ui/react': 2.5.1_gc24nmtdp32tnvrub3rgrqhnlu
   '@emotion/react': 11.10.6_pmekkgnqduwlme35zpnqhenc34
   '@emotion/styled': 11.10.6_oouaibmszuch5k64ms7uxp2aia
   '@ethersproject/constants': 5.7.0
   '@ethersproject/contracts': 5.7.0
   '@ethersproject/units': 5.7.0
+  '@udecode/zustood': 1.1.3_r3mcy5evxupl4ocjfamkh7b4ia
   '@wagmi/core': 0.9.6_go46g7a4ik46wme6uqq3vsw3qy
   framer-motion: 9.0.4_biqbaboplfbrettd7655fr4n2y
   lodash: 4.17.21
@@ -618,6 +622,26 @@ packages:
     dependencies:
       '@chakra-ui/shared-utils': 2.0.5
       '@chakra-ui/system': 2.5.1_xqp3pgpqjlfxxa3zxu4zoc4fba
+      react: 18.2.0
+    dev: false
+
+  /@chakra-ui/icon/3.0.16_react@18.2.0:
+    resolution: {integrity: sha512-RpA1X5Ptz8Mt39HSyEIW1wxAz2AXyf9H0JJ5HVx/dBdMZaGMDJ0HyyPBVci0m4RCoJuyG1HHG/DXJaVfUTVAeg==}
+    peerDependencies:
+      '@chakra-ui/system': '>=2.0.0'
+      react: '>=18'
+    dependencies:
+      '@chakra-ui/shared-utils': 2.0.5
+      react: 18.2.0
+    dev: false
+
+  /@chakra-ui/icons/2.0.17_react@18.2.0:
+    resolution: {integrity: sha512-HMJP0WrJgAmFR9+Xh/CBH0nVnGMsJ4ZC8MK6tMgxPKd9/muvn0I4hsicHqdPlLpmB0TlxlhkBAKaVMtOdz6F0w==}
+    peerDependencies:
+      '@chakra-ui/system': '>=2.0.0'
+      react: '>=18'
+    dependencies:
+      '@chakra-ui/icon': 3.0.16_react@18.2.0
       react: 18.2.0
     dev: false
 
@@ -3185,6 +3209,21 @@ packages:
       eslint-visitor-keys: 3.3.0
     dev: true
 
+  /@udecode/zustood/1.1.3_r3mcy5evxupl4ocjfamkh7b4ia:
+    resolution: {integrity: sha512-f3mxHDaOF+q2XvDh/mMvLhCNs0LfCLhIBl8jGmvZT/i3WWq7YujzGXgnbK8mxIkun9irfe6wlPhg9sTIB9Gnug==}
+    peerDependencies:
+      zustand: '>=3.5.10'
+    dependencies:
+      immer: 9.0.19
+      react-tracked: 1.7.11_biqbaboplfbrettd7655fr4n2y
+      zustand: 4.3.3_immer@9.0.19+react@18.2.0
+    transitivePeerDependencies:
+      - react
+      - react-dom
+      - react-native
+      - scheduler
+    dev: false
+
   /@vitejs/plugin-react/3.1.0_vite@4.1.1:
     resolution: {integrity: sha512-AfgcRL8ZBhAlc3BFdigClmTUMISmmzHn7sB2h9U1odvc5U/MjWXsAaz18b/WoppUTDBzxOJwo2VdClfUcItu9g==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -5670,13 +5709,13 @@ packages:
       '@types/connect': 3.4.35
       '@types/node': 12.20.55
       '@types/ws': 7.4.7
+      JSONStream: 1.3.5
       commander: 2.20.3
       delay: 5.0.0
       es6-promisify: 5.0.0
       eyes: 0.1.8
       isomorphic-ws: 4.0.1_ws@7.4.6
       json-stringify-safe: 5.0.1
-      JSONStream: 1.3.5
       lodash: 4.17.21
       uuid: 8.3.2
       ws: 7.4.6
@@ -6468,6 +6507,25 @@ packages:
       tslib: 2.4.0
     dev: false
 
+  /react-tracked/1.7.11_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-+XXv4dJH7NnLtSD/cPVL9omra4A3KRK91L33owevXZ81r7qF/a9DdCsVZa90jMGht/V1Ym9sasbmidsJykhULQ==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '*'
+      react-native: '*'
+      scheduler: '>=0.19.0'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      proxy-compare: 2.4.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      use-context-selector: 1.4.1_biqbaboplfbrettd7655fr4n2y
+    dev: false
+
   /react/18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
     engines: {node: '>=0.10.0'}
@@ -7011,6 +7069,23 @@ packages:
       '@types/react': 18.0.28
       react: 18.2.0
       tslib: 2.4.0
+    dev: false
+
+  /use-context-selector/1.4.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-Io2ArvcRO+6MWIhkdfMFt+WKQX+Vb++W8DS2l03z/Vw/rz3BclKpM0ynr4LYGyU85Eke+Yx5oIhTY++QR0ZDoA==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '*'
+      react-native: '*'
+      scheduler: '>=0.19.0'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /use-sidecar/1.1.2_pmekkgnqduwlme35zpnqhenc34:

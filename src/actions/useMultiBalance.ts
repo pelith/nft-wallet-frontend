@@ -9,9 +9,15 @@ interface MultiFetchProps extends Omit<FetchBalanceArgs, 'token'> {
   tokens: `0x${string}`[]
 }
 
-type UseMultiBalanceProps = Exclude<Parameters<typeof useBalance>[0], undefined> & {
+type UseMultiBalanceProps = Exclude<
+  Parameters<typeof useBalance>[0],
+  undefined | 'onSettled' | 'onSuccess'
+> & {
   tokens: `0x${string}`[]
   token?: undefined
+  onSettled?: ((data: FetchBalanceResult[] | undefined, error: Error | null) => void) &
+    (() => any)
+  onSuccess?: (data: FetchBalanceResult[]) => void
 }
 
 export default function useMultiBalance({
@@ -32,7 +38,7 @@ export default function useMultiBalance({
   const chainId = useChainId({ chainId: chainId_ })
   const queryKey_ = useMemo(
     () => queryKey({ address, chainId, formatUnits, scopeKey, tokens }),
-    [address, chainId, formatUnits, scopeKey, ...tokens],
+    [address, chainId, formatUnits, scopeKey, tokens.length],
   )
   const balanceQuery = useQuery(queryKey_, queryFn, {
     cacheTime,

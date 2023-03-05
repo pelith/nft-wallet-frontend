@@ -35,8 +35,9 @@ const NftPicker = () => {
             w="100px"
             h="100px"
             bg="grey"
+            boxSizing="border-box"
             border={
-              registerRouter === REGISTER_ROUTE.INPUT_EXIST ? '1px solid red' : undefined
+              registerRouter === REGISTER_ROUTE.INPUT_EXIST ? '4px solid red' : undefined
             }
           />
           <Text>Register/Input NFT</Text>
@@ -51,8 +52,9 @@ const NftPicker = () => {
             w="100px"
             h="100px"
             bg="grey"
+            boxSizing="border-box"
             border={
-              registerRouter === REGISTER_ROUTE.MINT_NEW ? '1px solid red' : undefined
+              registerRouter === REGISTER_ROUTE.MINT_NEW ? '4px solid red' : undefined
             }
           />
           <Text>Mint Demo NFT</Text>
