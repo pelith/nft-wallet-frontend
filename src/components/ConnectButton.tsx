@@ -22,7 +22,7 @@ const NativeBalance = () => {
       <Box whiteSpace="nowrap" fontSize="14px">
         Wallet balance
       </Box>
-      <Divider borderColor="#1e1e1e" orientation="vertical" />
+      <Divider borderColor="#79ffb5" orientation="vertical" />
       <Box whiteSpace="nowrap">
         {formatCommonNumber(balance?.formatted)} {balance?.symbol}
       </Box>
@@ -46,7 +46,7 @@ export default function ConnectButton() {
       Switch Network
     </Button>
   ) : (
-    <Center bg="#B1B1B1" h="40px" px="30px" pos="relative" borderRadius="112px">
+    <Center bg="#7b7697" h="40px" px="30px" pos="relative" borderRadius="112px">
       {shortenAddress(address!, 3, 7)}
       <NativeBalance />
     </Center>

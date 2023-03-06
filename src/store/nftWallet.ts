@@ -87,16 +87,16 @@ export const nftWalletsStore = createStore('nftWallets')(
           })
           .catch(() => false)
         console.log(isDeployed)
-        if (!isDeployed) {
-          console.log(ABINFTWalletFactory, NFT_FACTORY[USED_CHAIN])
-          const config = await prepareWriteContract({
-            abi: ABINFTWalletFactory,
-            address: NFT_FACTORY[USED_CHAIN],
-            functionName: 'createWallet',
-            args: [nftAddress, _orderIndex],
-          })
-          await writeContract(config)
-        }
+        // if (!isDeployed) {
+        //   console.log(ABINFTWalletFactory, NFT_FACTORY[USED_CHAIN])
+        //   const config = await prepareWriteContract({
+        //     abi: ABINFTWalletFactory,
+        //     address: NFT_FACTORY[USED_CHAIN],
+        //     functionName: 'createWallet',
+        //     args: [nftAddress, _orderIndex],
+        //   })
+        //   await writeContract(config)
+        // }
 
         set.state((draft) => {
           if (!draft.entities.has(key)) {

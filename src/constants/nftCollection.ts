@@ -13,6 +13,11 @@ export const SAMPLE_NFT_ADDRESS: Record<ChainId, `0x${string}`> = {
   [ChainId.FANTOM]: import.meta.env.VITE_APP_SAMPLE_NFT_ADDRESS,
 }
 
+export const RARITY_NFT_ADDRESS: Record<ChainId, `0x${string}`> = {
+  [ChainId.FORK_MAIN_NET]: '0xce761D788DF608BD21bdd59d6f4B54b2e27F25Bb',
+  [ChainId.FANTOM]: '0xce761D788DF608BD21bdd59d6f4B54b2e27F25Bb',
+}
+
 export const NFT_COLLECTION: Record<ChainId, NFTCollection[]> = {
   [ChainId.FORK_MAIN_NET]: [
     {

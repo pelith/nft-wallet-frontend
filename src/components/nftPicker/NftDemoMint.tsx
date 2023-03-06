@@ -1,6 +1,7 @@
-import { Button, Flex } from '@chakra-ui/react'
+import { Button, Center, Flex } from '@chakra-ui/react'
 import { AddressZero } from '@ethersproject/constants'
 import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useNetwork } from 'wagmi'
 
 import { SAMPLE_NFT_ADDRESS } from '@/constants/nftCollection'
@@ -9,22 +10,29 @@ import useMintNFT from '@/hooks/useMintNFT'
 const NftNavigator = () => {
   const { chain } = useNetwork()
 
-  const { mintNFT, data, isLoading, isSuccess } = useMintNFT(
-    SAMPLE_NFT_ADDRESS[chain!.id] || AddressZero,
-  )
+  const sampleNftController = useMintNFT(SAMPLE_NFT_ADDRESS[chain!.id] || AddressZero)
+
+  const navigate = useNavigate()
 
   useEffect(() => {
-    if (isSuccess) {
-      console.log(data)
+    if (sampleNftController.isSuccess) {
+      navigate(`#sample`)
     }
-  }, [isSuccess])
+  }, [sampleNftController.isSuccess])
 
   return (
-    <Flex>
-      <Button isDisabled={isLoading} onClick={mintNFT}>
-        Mint
-      </Button>
-    </Flex>
+    <Center h="100%">
+      <Flex justifyContent="space-around" w="100%">
+        <Button
+          h="300px"
+          w="300px"
+          isDisabled={sampleNftController.isLoading}
+          onClick={sampleNftController.mintNFT}
+        >
+          Mint Demo NFT
+        </Button>
+      </Flex>
+    </Center>
   )
 }
 

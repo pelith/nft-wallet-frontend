@@ -100,7 +100,9 @@ export default function NFTWalletConnect() {
         </Text>
       )}
       <Box>
-        <Button onClick={mintNFT}>mint nft</Button>
+        <Button variant="primary" onClick={mintNFT}>
+          mint nft
+        </Button>
         <Button onClick={mintRarityNFT}>
           mint rarity nft: {rarityNextSummoned?.toNumber()}
         </Button>

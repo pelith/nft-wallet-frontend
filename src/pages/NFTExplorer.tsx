@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom'
 import { useProvider } from 'wagmi'
 import { multicall } from 'wagmi/actions'
 
+import CommonInput from '@/components/CommonInput'
 import ABINFTWallet from '@/constants/abis/ABINFTWallet'
 import { isAddress } from '@/utils/web3Utils'
 
@@ -87,24 +88,15 @@ export default function NFTExplorer() {
       <Box mb="10%" textAlign="center">
         Explorer
       </Box>
-
       <Flex h="1.5rem" gap="10px" justifyContent="center" alignItems="center">
-        <Text>NFT Wallet address</Text>
-        <Divider orientation="vertical" borderColor="blackAlpha.700" />
-        <Input
-          bg="#D9D9D9"
-          placeholder="0x..."
-          title="NFT Wallet Address"
-          w="30vw"
-          size="sm"
-          autoComplete="off"
-          rounded="1rem"
-          autoCorrect="off"
+        <CommonInput
+          label={'NFT Wallet address'}
           onChange={(e) => setInputAddress(e.currentTarget.value)}
         />
       </Flex>
       <Button
-        w="150px"
+        w="100px"
+        variant="reward"
         onClick={onSearch}
         isLoading={isLoading}
         size="sm"

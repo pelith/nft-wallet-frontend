@@ -15,9 +15,16 @@ const NftWalletDetails = () => {
 
   return (
     <Grid pos="relative" templateColumns="4fr 3fr" gap={6} pt="50px">
-      <Center cursor="pointer" pos="absolute" top="10px" left="0" onClick={back}>
+      <Center
+        cursor="pointer"
+        pos="absolute"
+        top="10px"
+        left="0"
+        onClick={back}
+        mt="16px"
+      >
         <ChevronLeftIcon />
-        back
+        Back
       </Center>
       <GridItem>
         <NftWalletBasicInfo nftAddress={nftAddress as `0x${string}`} nftId={+nftIndex!} />

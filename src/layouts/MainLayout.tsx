@@ -19,12 +19,12 @@ const getActiveStyle = cond<{ isActive: boolean }, CSSProperties>([
 
 export default function MainLayout() {
   return (
-    <Box padding="60px 120px 0px">
+    <Flex direction="column" padding="60px 120px 0px" h="100%">
       <Flex
         w="full"
         position="relative"
         borderRadius="20px 70px 70px 20px"
-        bg="#D9D9D9"
+        bg="#3e3959"
         alignItems="center"
       >
         <Center
@@ -35,7 +35,7 @@ export default function MainLayout() {
           h="2.5rem"
           to="/"
           style={getActiveStyle}
-          bg="#B3B3B3"
+          bg="#7b7697"
           _hover={{ background: '#999999', color: 'white' }}
         >
           Profile
@@ -47,7 +47,7 @@ export default function MainLayout() {
           h="2.5rem"
           style={getActiveStyle}
           _hover={{ background: '#999999', color: 'white' }}
-          bg="#B3B3B3"
+          bg="#7b7697"
           to="/disperse"
         >
           Disperse
@@ -60,14 +60,16 @@ export default function MainLayout() {
           h="2.5rem"
           style={getActiveStyle}
           _hover={{ background: '#999999', color: 'white' }}
-          bg="#B3B3B3"
+          bg="#7b7697"
           to="/explorer"
         >
           Explorer
         </Center>
         <ConnectButton />
       </Flex>
-      <Outlet />
-    </Box>
+      <Box flex="1">
+        <Outlet />
+      </Box>
+    </Flex>
   )
 }

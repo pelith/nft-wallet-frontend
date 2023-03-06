@@ -64,18 +64,20 @@ export default function NFTWalletConnect() {
     <Box mt="30px">
       <Flex gap="10px">
         <Menu isLazy>
-          <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+          <MenuButton as={Button} rightIcon={<ChevronDownIcon />} borderBottomRadius="0">
             Collections: {selected}
           </MenuButton>
-          <MenuList>
+          <MenuList bg="grey">
             <MenuOptionGroup
               onChange={(e) => setUsedCollection(e as string)}
               defaultValue="all"
               value={usedCollection}
             >
-              <MenuItemOption value="all">All</MenuItemOption>
+              <MenuItemOption value="all" bg="grey">
+                All
+              </MenuItemOption>
               {nftCollectionOptions.map((ele) => (
-                <MenuItemOption key={ele.address} value={ele.address}>
+                <MenuItemOption bg="grey" key={ele.address} value={ele.address}>
                   {ele.name}
                 </MenuItemOption>
               ))}
@@ -83,12 +85,12 @@ export default function NFTWalletConnect() {
           </MenuList>
         </Menu>
         {canScan && (
-          <Button size="md" onClick={scan}>
-            SCAN
+          <Button size="md" onClick={scan} borderBottomRadius="0">
+            Scan
           </Button>
         )}
       </Flex>
-      <Box bg="#D9D9D9" w="100%" p="20px 15px" minH="60vh" h="1px">
+      <Box bg="#3e3959" w="100%" p="20px 15px" minH="60vh" h="1px">
         {isConnected ? (
           <Flex flexWrap="wrap" columnGap="10px" rowGap="15px" h="auto">
             {displayWallets.map((walletAddress) => (

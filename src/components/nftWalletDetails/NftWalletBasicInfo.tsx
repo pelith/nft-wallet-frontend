@@ -96,7 +96,7 @@ const NftWalletBasicInfo = ({ nftAddress, nftId }: Props) => {
       </Flex>
       <Flex h="1.5rem" gap="20px">
         <Box>NFT Wallet Address</Box>
-        <Divider orientation="vertical" borderWidth="1px" borderColor="black" />
+        <Divider orientation="vertical" borderWidth="1px" borderColor="#79ffb5" />
         <Box>{walletInfo.walletAddress}</Box>
       </Flex>
     </Flex>

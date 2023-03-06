@@ -15,8 +15,8 @@ const CommonInput = ({
   options,
 }: CommonInputProps) => {
   return (
-    <Flex gap="2px" position="relative" h="100%">
-      <Flex flex={1}>
+    <Flex gap="2px" position="relative" h="100%" alignItems="center">
+      <Flex flex={1} h="100%">
         <Flex w="250px" direction="column">
           <Box>{label}</Box>
           {helperText && (
@@ -25,12 +25,7 @@ const CommonInput = ({
             </Box>
           )}
         </Flex>
-        <Divider
-          ml="auto"
-          mr="20px"
-          borderColor="blackAlpha.700"
-          orientation="vertical"
-        />
+        <Divider ml="auto" mr="20px" borderColor="#79ffb5" orientation="vertical" />
       </Flex>
       {options ? (
         <Select onChange={(e) => onChange?.(e as any)}>
@@ -46,6 +41,9 @@ const CommonInput = ({
           autoCorrect="off"
           flex={5}
           value={value}
+          w="30vw"
+          size="sm"
+          rounded="1rem"
           onChange={onChange}
         />
       )}

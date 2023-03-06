@@ -27,6 +27,7 @@ const NftPicker = () => {
       <Flex width="100%" justifyContent="space-around">
         <Flex
           direction="column"
+          alignItems="center"
           onClick={() => {
             setRegisterRouter(REGISTER_ROUTE.INPUT_EXIST)
           }}
@@ -39,11 +40,13 @@ const NftPicker = () => {
             border={
               registerRouter === REGISTER_ROUTE.INPUT_EXIST ? '4px solid red' : undefined
             }
+            mb="16px"
           />
           <Text>Register/Input NFT</Text>
         </Flex>
         <Flex
           direction="column"
+          alignItems="center"
           onClick={() => {
             setRegisterRouter(REGISTER_ROUTE.MINT_NEW)
           }}
@@ -56,12 +59,15 @@ const NftPicker = () => {
             border={
               registerRouter === REGISTER_ROUTE.MINT_NEW ? '4px solid red' : undefined
             }
+            mb="16px"
           />
           <Text>Mint Demo NFT</Text>
         </Flex>
       </Flex>
       <Text>Please select a way to create nft wallet</Text>
-      <Button onClick={onClickNavigate}>Confirm</Button>
+      <Button mt="16px" onClick={onClickNavigate}>
+        Next
+      </Button>
     </Flex>
   )
 }

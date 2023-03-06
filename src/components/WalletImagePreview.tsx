@@ -11,5 +11,11 @@ interface IProps {
 
 export default function WalletImagePreview({ nftAddress, nftId }: IProps) {
   const { imgURI } = useNFTImageLoading(isAddress(nftAddress) || AddressZero, nftId ?? 0)
-  return <Image src={imgURI} fallbackSrc="https://via.placeholder.com/150" />
+  return (
+    <Image
+      borderRadius="8px"
+      src={imgURI}
+      fallbackSrc="https://via.placeholder.com/150"
+    />
+  )
 }
