@@ -7,12 +7,22 @@ import { erc20ABI, useContractWrite, usePrepareContractWrite } from 'wagmi'
 import ABINFTWallet from '@/constants/abis/ABINFTWallet'
 import { transactionHistoryStore } from '@/store/transactionHistory'
 import { statusValidate } from '@/utils'
-export default function useTokenTransfer(
-  walletAddress: `0x${string}`,
-  targetWallet: `0x${string}`,
-  value: BigNumber,
-  tokenAddress?: `0x${string}`,
-) {
+export default function useTokenTransfer({
+  walletAddress,
+  nftAddress,
+  nftId,
+  targetWallet,
+  value,
+  tokenAddress,
+}: {
+  walletAddress: `0x${string}`
+  nftAddress: `0x${string}`
+  nftId: number
+  targetWallet: `0x${string}`
+  value: BigNumber
+  tokenAddress?: `0x${string}`
+}) {
+  console.log(walletAddress, nftAddress, nftId, targetWallet, value, tokenAddress)
   const isNativeTokenTransfer = !tokenAddress
 
   const { config } = usePrepareContractWrite({
@@ -55,7 +65,7 @@ export default function useTokenTransfer(
   return {
     transfer: () => {
       return transfer?.().then((res) => {
-        transactionHistoryStore.set.addTransactionHistory(walletAddress, res.hash)
+        transactionHistoryStore.set.addTransactionHistory(nftAddress, nftId, res.hash)
         return res
       })
     },

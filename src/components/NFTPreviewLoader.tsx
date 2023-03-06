@@ -52,7 +52,7 @@ export default function NFTPreviewLoader({ nftWalletKey }: IProps) {
         {shortenAddress(walletInfo.nftAddress)}: {walletInfo.id}
       </Box>
       <Box>
-        <Box>{`${nativeBalance?.value} ${nativeBalance?.symbol}`}</Box>
+        <Box>{`${nativeBalance?.formatted} ${nativeBalance?.symbol}`}</Box>
         {balances?.map((price) => (
           <Box key={price.symbol}>
             {price.formatted} {price.symbol}

@@ -67,10 +67,7 @@ function NFTWalletControlPanel({
   const usedTargetWallet = isAddress(targetWallet) || AddressZero
 
   const { transfer, isLoading } = useTokenTransfer(
-    walletAddress,
-    usedTargetWallet,
-    safeInputBigNumber,
-    usedTokenAddress,
+    { walletAddress, nftAddress: usedTargetWallet, nftId: safeInputBigNumber, targetWallet: usedTokenAddress },
   )
 
   const transferButtonDisabled =

@@ -9,12 +9,8 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
 
-import {
-  transactionHistoryStore,
-  useTransactionHistoryStore,
-} from '@/store/transactionHistory'
+import { useTransactionHistoryStore } from '@/store/transactionHistory'
 
 interface IProps {
   nftAddress: `0x${string}`
@@ -25,16 +21,6 @@ const NftWalletTransactionDetail = ({ nftAddress, nftId }: IProps) => {
   const history = useTransactionHistoryStore((store) =>
     store.history.get(`${nftAddress}/${nftId}`),
   )
-
-  useEffect(() => {
-    if (!history?.length) {
-      transactionHistoryStore.set.addTransactionHistory(
-        nftAddress,
-        nftId,
-        '0x9a7de138ede0580c9cb8a5f57b4e44aedcebfe294b50e057d3231f364bcf9882',
-      )
-    }
-  }, [])
 
   return (
     <Box>
