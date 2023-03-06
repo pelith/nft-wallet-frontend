@@ -22,7 +22,7 @@ const NativeBalance = () => {
       <Box whiteSpace="nowrap" fontSize="14px">
         Wallet balance
       </Box>
-      <Divider borderColor="#79ffb5" orientation="vertical" />
+      <Divider borderColor="emerald.primary" orientation="vertical" />
       <Box whiteSpace="nowrap">
         {formatCommonNumber(balance?.formatted)} {balance?.symbol}
       </Box>

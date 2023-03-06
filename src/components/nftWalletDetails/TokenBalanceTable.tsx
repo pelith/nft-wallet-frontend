@@ -1,5 +1,6 @@
 import {
   Button,
+  Flex,
   Table,
   TableContainer,
   Tbody,
@@ -45,51 +46,47 @@ const TokenBalanceTable = ({ nftWalletKey }: Props) => {
   const navigate = useNavigate()
 
   return (
-    <TableContainer>
-      <Table className="data-table" variant="simple">
-        <Thead>
-          <Tr>
-            <Th>Token</Th>
-            <Th>Balance</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          <Tr>
-            <Td>{nativeBalance?.symbol}</Td>
-            <Td>{nativeBalance?.formatted}</Td>
-          </Tr>
-          {balances?.map((tokenBalance, i) => {
-            return (
-              <Tr key={tokenBalance.symbol}>
-                <Tooltip label={`${tokens[i]?.[1]?.address || ''}`}>
-                  <Td>{tokenBalance.symbol}</Td>
-                </Tooltip>
-                <Td>{tokenBalance.formatted}</Td>
-              </Tr>
-            )
-          })}
-        </Tbody>
-        <Tfoot display="flex" p="10px" w="full">
-          <Tr>
-            <Td>
-              <TokenImportButton />
-            </Td>
-            <Td>
-              <Button
-                rounded="1.5rem"
-                size="sm"
-                onClick={() => {
-                  navigate(`/nft/transfer/${nftWalletKey}`)
-                }}
-                isDisabled={!isOwned}
-              >
-                Transfer with NFT Wallet
-              </Button>
-            </Td>
-          </Tr>
-        </Tfoot>
-      </Table>
-    </TableContainer>
+    <>
+      <TableContainer>
+        <Table>
+          <Thead>
+            <Tr>
+              <Th>Token</Th>
+              <Th>Balance</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            <Tr>
+              <Td>{nativeBalance?.symbol}</Td>
+              <Td>{nativeBalance?.formatted}</Td>
+            </Tr>
+            {balances?.map((tokenBalance, i) => {
+              return (
+                <Tr key={tokenBalance.symbol}>
+                  <Tooltip label={`${tokens[i]?.[1]?.address || ''}`}>
+                    <Td>{tokenBalance.symbol}</Td>
+                  </Tooltip>
+                  <Td>{tokenBalance.formatted}</Td>
+                </Tr>
+              )
+            })}
+          </Tbody>
+        </Table>
+      </TableContainer>
+      <Flex mt="1rem" w="100%" justifyContent="space-around">
+        <TokenImportButton />
+        <Button
+          rounded="1.5rem"
+          size="sm"
+          onClick={() => {
+            navigate(`/nft/transfer/${nftWalletKey}`)
+          }}
+          isDisabled={!isOwned}
+        >
+          Transfer with NFT Wallet
+        </Button>
+      </Flex>
+    </>
   )
 }
 

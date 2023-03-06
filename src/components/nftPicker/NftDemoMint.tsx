@@ -7,7 +7,7 @@ import { useNetwork } from 'wagmi'
 import { SAMPLE_NFT_ADDRESS } from '@/constants/nftCollection'
 import useMintNFT from '@/hooks/useMintNFT'
 
-const NftNavigator = () => {
+const NftDemoMint = () => {
   const { chain } = useNetwork()
 
   const sampleNftController = useMintNFT(SAMPLE_NFT_ADDRESS[chain!.id] || AddressZero)
@@ -36,4 +36,4 @@ const NftNavigator = () => {
   )
 }
 
-export default NftNavigator
+export default NftDemoMint

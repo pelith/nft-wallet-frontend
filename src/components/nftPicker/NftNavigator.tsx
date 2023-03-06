@@ -100,7 +100,7 @@ const NftNavigator = () => {
         value={nftIndex}
         onChange={(e) => setNftIndex(e.currentTarget.value)}
       />
-      <Flex justifyContent="center" w="100%">
+      <Flex justifyContent="center" w="100%" mt="30px">
         <Button
           width="200px"
           isLoading={isWalletFetching}

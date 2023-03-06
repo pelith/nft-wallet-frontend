@@ -12,6 +12,8 @@ import {
 
 import { useTransactionHistoryStore } from '@/store/transactionHistory'
 
+import BannerHeading from '../BannerHeading'
+
 interface IProps {
   nftAddress: `0x${string}`
   nftId: number
@@ -24,7 +26,7 @@ const NftWalletTransactionDetail = ({ nftAddress, nftId }: IProps) => {
 
   return (
     <Box>
-      <Heading>Transaction History</Heading>
+      <BannerHeading>Transaction History</BannerHeading>
       <TableContainer>
         <Table>
           <Thead>

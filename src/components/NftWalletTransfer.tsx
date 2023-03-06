@@ -90,6 +90,7 @@ const NftWalletTransfer = () => {
         <CommonInput
           label="Transfer to wallet Address"
           value={walletAddress}
+          placeholder="0x..."
           onChange={(e) => setWalletAddress(e.currentTarget.value)}
         />
         <CommonInput
@@ -101,6 +102,7 @@ const NftWalletTransfer = () => {
         <CommonInput
           label="Amount"
           value={amount}
+          placeholder="0"
           onChange={(e) => setAmount(e.currentTarget.value)}
         />
         <Center>

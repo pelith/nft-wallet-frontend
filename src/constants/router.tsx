@@ -1,3 +1,4 @@
+import { Box, Flex } from '@chakra-ui/react'
 import { Navigate, RouteObject } from 'react-router-dom'
 
 import NftDemoMint from '@/components/nftPicker/NftDemoMint'
@@ -46,7 +47,13 @@ export const routes: RouteObject[] = [
           },
           {
             path: '/nft-picker/input',
-            element: <NftNavigator />,
+            element: (
+              <Flex width="100%" alignItems="center" justifyContent="center" h="100%">
+                <Box maxW="900px">
+                  <NftNavigator />
+                </Box>
+              </Flex>
+            ),
           },
           {
             path: '/nft-picker/mint',

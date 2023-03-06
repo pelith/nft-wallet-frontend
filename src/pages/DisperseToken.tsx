@@ -4,6 +4,8 @@ import range from 'lodash/range'
 import { useMemo, useState } from 'react'
 
 import { AuthApproveTokenButton } from '@/components/AuthButton'
+import CommonInput from '@/components/CommonInput'
+import CommonLabelLayout from '@/components/CommonLabelLayout'
 import { USED_CHAIN } from '@/constants/chain'
 import { NFT_COLLECTION } from '@/constants/nftCollection'
 import { NFT_FACTORY } from '@/constants/nftContract'
@@ -70,19 +72,11 @@ export default function DisperseToken() {
       </Box>
 
       <Flex h="1.5rem" gap="10px" justifyContent="start" alignItems="center">
-        <Text w="150px">NFT address</Text>
-        <Divider orientation="vertical" borderColor="blackAlpha.700" />
-        <Input
-          bg="#D9D9D9"
-          placeholder="0x..."
-          title="NFT Address"
-          w="30vw"
-          size="sm"
-          autoComplete="off"
-          rounded="1rem"
-          autoCorrect="off"
+        <CommonInput
+          label="NFT address"
           value={nftAddress}
           onChange={(e) => setNFTAddress(e.currentTarget.value)}
+          placeholder="0x..."
         />
         {NFT_COLLECTION[USED_CHAIN].map((nft) => (
           <Button
@@ -97,23 +91,13 @@ export default function DisperseToken() {
         ))}
       </Flex>
       <Flex h="1.5rem" gap="10px" justifyContent="start" alignItems="center">
-        <Text w="150px">
-          Asset: <br />
-          {balanceData?.symbol} {balanceData?.formatted}
-        </Text>
-        <Divider orientation="vertical" borderColor="blackAlpha.700" />
-        <Input
-          bg="#D9D9D9"
-          placeholder="0x..."
-          title="Asset"
-          w="30vw"
-          size="sm"
+        <CommonInput
+          label="Asset"
           value={asset}
-          autoComplete="off"
-          rounded="1rem"
-          autoCorrect="off"
           onChange={(e) => setAsset(e.currentTarget.value)}
+          placeholder="0x..."
         />
+        <Divider orientation="vertical" borderColor="blackAlpha.700" />
         {[...nftWalletsStore.get.tokenList()].map((token) => (
           <Button
             size="sm"
@@ -128,20 +112,20 @@ export default function DisperseToken() {
         ))}
       </Flex>
       <Flex minH="1.5rem" gap="10px" justifyContent="start" alignItems="start">
-        <Text w="150px">Index & Amount</Text>
-        <Divider h="1.5rem" orientation="vertical" borderColor="blackAlpha.700" />
-        <Textarea
-          bg="#D9D9D9"
-          placeholder="Format: Index, Amount"
-          title="NFT Wallet Address"
-          w="30vw"
-          size="sm"
-          rows={5}
-          autoComplete="off"
-          rounded="1rem"
-          autoCorrect="off"
-          onChange={(e) => setDisperseList(e.currentTarget.value)}
-        />
+        <CommonLabelLayout label="Index & Amount">
+          <Textarea
+            placeholder="Format: Index, Amount"
+            title="NFT Wallet Address"
+            w="30vw"
+            size="sm"
+            rows={5}
+            autoComplete="off"
+            rounded="1rem"
+            autoCorrect="off"
+            onChange={(e) => setDisperseList(e.currentTarget.value)}
+          />
+        </CommonLabelLayout>
+
         <Box as="pre">{`Format: Index,Amount\nExample: 1-50,100\n         60-100,200`}</Box>
       </Flex>
       <Flex>

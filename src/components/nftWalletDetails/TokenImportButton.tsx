@@ -52,7 +52,7 @@ export default function TokenImportButton() {
         </Button>
       </PopoverTrigger>
       <PopoverContent>
-        <VStack>
+        <VStack p="16px 20px">
           <Input
             value={tokenAddress}
             placeholder="please input token address"

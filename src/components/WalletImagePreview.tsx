@@ -19,6 +19,8 @@ export default function WalletImagePreview({ nftAddress, nftId }: IProps) {
   )
   return (
     <Image
+      minW="150px"
+      minH="150px"
       w="150px"
       h="150px"
       objectFit="contain"

@@ -9,7 +9,7 @@ const baseStyle = defineStyle({
     opacity: 0.4,
     cursor: 'not-allowed',
     bg: 'neutral.700',
-    color: 'neutral.110-30',
+    color: 'neutral.100',
   },
 
   // below from chakra
@@ -25,9 +25,7 @@ const baseStyle = defineStyle({
 })
 
 const primaryBoxShadow: { [key: string]: string } = {
-  investment: '0px 0px 10px rgba(48, 99, 240, 0.75)',
-  satellite: '0px 0px 10px rgba(230, 113, 11, 0.75)',
-  reward: '0px 0px 10px rgba(8, 189, 159, 0.75)',
+  sapphire: '0px 0px 10px rgba(8, 189, 159, 0.75)',
 }
 
 const variantPrimary = defineStyle((props) => {
@@ -74,9 +72,9 @@ const variantSecondary = defineStyle((props) => {
   const { colorScheme: c } = props
 
   const {
-    bg = 'neutral.110-15',
+    bg = 'neutral.500',
     color = 'neutral.100',
-    hoverBg = 'neutral.110-30',
+    hoverBg = 'neutral.700',
     activeBg,
   } = accessibleColorMap[c] || ({} as AccessibleColor)
 
@@ -92,7 +90,7 @@ const variantSecondary = defineStyle((props) => {
 
 const variantTertiary = defineStyle(() => {
   return {
-    color: 'neutral.130-75',
+    color: 'neutral.500',
     _hover: {
       color: 'neutral.100',
       _disabled: {
@@ -103,8 +101,8 @@ const variantTertiary = defineStyle(() => {
 })
 
 const variantMenu = defineStyle({
-  bg: 'neutral.800',
-  color: 'neutral.120-60',
+  bg: 'neutral.900',
+  color: 'neutral.100',
   borderRadius: '8px',
   _hover: {
     bg: 'neutral.700',
@@ -149,6 +147,6 @@ export const buttonTheme = defineStyleConfig({
   defaultProps: {
     variant: 'primary',
     size: 'md',
-    colorScheme: 'reward',
+    colorScheme: 'sapphire',
   },
 })
