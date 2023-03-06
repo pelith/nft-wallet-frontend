@@ -3,22 +3,13 @@ import { createStore } from '@udecode/zustood'
 import { erc20ABI } from 'wagmi'
 import { multicall } from 'wagmi/actions'
 
+import { NFTWalletInfo } from '@/types/walletInfo'
 import { toast } from '@/utils/createToast'
 import readNFTWalletInfo from '@/utils/readNFTWalletInfo'
 
 export const nftWalletsStore = createStore('nftWallets')(
   {
-    entities: new Map<
-      string,
-      {
-        walletAddress: `0x${string}`
-        id: number
-        nftAddress: `0x${string}`
-        imgURI: string
-        ownedBy: `0x${string}`
-        isDeployed: boolean
-      }
-    >(),
+    entities: new Map<string, NFTWalletInfo>(),
     wallets: [] as string[],
     tokenList: new Map<
       string,

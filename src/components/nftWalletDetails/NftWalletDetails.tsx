@@ -33,7 +33,10 @@ const NftWalletDetails = () => {
         <TokenBalanceTable nftWalletKey={`${nftAddress}/${nftIndex}`} />
       </GridItem>
       <GridItem colSpan={2}>
-        <NftWalletTransactionDetail />
+        <NftWalletTransactionDetail
+          nftAddress={nftAddress as `0x${string}`}
+          nftId={+nftIndex!}
+        />
       </GridItem>
     </Grid>
   )

@@ -6,15 +6,9 @@ import { multicall } from 'wagmi/actions'
 import ABINFTWalletFactory from '@/constants/abis/ABINFTWalletFactory'
 import { USED_CHAIN } from '@/constants/chain'
 import { NFT_FACTORY } from '@/constants/nftContract'
+import { NFTWalletInfo } from '@/types/walletInfo'
 import { wagmiClient } from '@/wagmiConfigure'
-type NFTWalletInfo = {
-  id: number
-  nftAddress: `0x${string}`
-  walletAddress: `0x${string}`
-  imgURI: string
-  ownedBy: `0x${string}`
-  isDeployed: boolean
-}
+
 export default async function readNFTWalletInfo(
   nftAddress: `0x${string}`,
   nftId: number,
