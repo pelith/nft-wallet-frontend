@@ -4,6 +4,7 @@ const selfTest = {
   ...localhost,
   id: 8787,
   nativeCurrency: fantom.nativeCurrency,
+  contract: fantom.contracts,
 } as const
 
 export const USED_CHAIN_INFO = [fantom, selfTest]
@@ -14,7 +15,7 @@ export enum ChainId {
 }
 
 export const DEFAULT_CHAIN_ID: ChainId =
-  import.meta.env.VITE_APP_ENV === 'development' ? ChainId.FORK_MAIN_NET : ChainId.GOERLI
+  import.meta.env.VITE_APP_ENV === 'development' ? ChainId.FORK_MAIN_NET : ChainId.FANTOM
 
 export const JSON_RPC_NETWORK = {
   [ChainId.FANTOM]: import.meta.env.VITE_FANTOM_NETWORK_URL,

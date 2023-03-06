@@ -39,7 +39,7 @@ export default function withApproveTokenCheckWrapper<
 
     const isPending = approvalState === ApprovalState.LOADING
     const isApproved = approvalState === ApprovalState.APPROVED
-    const isDisabled = isApproved ? disabled || isDisabled_ : isPending
+    const isDisabled = disabled || isDisabled_
     const handleClick = isApproved
       ? onClick
       : () => {
@@ -65,6 +65,7 @@ export default function withApproveTokenCheckWrapper<
       onClick: handleClick,
       children: childrenElement,
       isDisabled,
+      isLoading: isPending,
     }
 
     return <WrappedComponent {...wrappedComponentProps} />

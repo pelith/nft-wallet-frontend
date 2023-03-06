@@ -6,6 +6,7 @@ import NftPicker from '@/components/nftPicker/NftPicker'
 import NftPickerMainLayout from '@/components/nftPicker/NftPickerMainLayout'
 import NftWalletDetails from '@/components/nftWalletDetails/NftWalletDetails'
 import MainLayout from '@/layouts/MainLayout'
+import DisperseToken from '@/pages/DisperseToken'
 import NFTExplorer from '@/pages/NFTExplorer'
 import NFTWalletConnect from '@/pages/NFTWalletConnect'
 
@@ -20,7 +21,7 @@ export const routes: RouteObject[] = [
       },
       {
         path: '/disperse',
-        element: <div>disperse</div>,
+        element: <DisperseToken />,
       },
       {
         path: '/explorer',

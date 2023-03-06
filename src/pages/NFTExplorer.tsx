@@ -77,7 +77,13 @@ export default function NFTExplorer() {
   }
 
   return (
-    <Flex pt="50px" flexDir="column" gap="20px" justifyContent="center">
+    <Flex
+      pt="50px"
+      flexDir="column"
+      gap="20px"
+      justifyContent="center"
+      alignItems="center"
+    >
       <Box mb="10%" textAlign="center">
         Explorer
       </Box>
@@ -96,10 +102,16 @@ export default function NFTExplorer() {
           autoCorrect="off"
           onChange={(e) => setInputAddress(e.currentTarget.value)}
         />
-        <Button onClick={onSearch} isLoading={isLoading} size="sm" isDisabled={!_address}>
-          Search
-        </Button>
       </Flex>
+      <Button
+        w="150px"
+        onClick={onSearch}
+        isLoading={isLoading}
+        size="sm"
+        isDisabled={!_address}
+      >
+        Search
+      </Button>
     </Flex>
   )
 }
