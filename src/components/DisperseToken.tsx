@@ -27,10 +27,6 @@ import { isAddress } from '@/utils/web3Utils'
 
 import { AuthApproveTokenButton } from './AuthButton'
 
-interface IDisperseTokenModalProps {
-  NFTWalletAddress?: `0x${string}`
-}
-
 const regexKey = /([0-9]*[.])?[0-9]+,([0-9]*[.])?[0-9]+(\r?\n)?/gm
 
 function formatValidate(inputStr: string) {
@@ -47,7 +43,7 @@ function formatValidate(inputStr: string) {
   return result
 }
 
-function DisperseTokenModalContent({ NFTWalletAddress }: IDisperseTokenModalProps) {
+function DisperseTokenModalContent() {
   const [tokenAddress, setTokenAddress] = useState(
     '0x4da7745993E76929Ba11fDa60cAF671e8161F0fa',
   )
@@ -61,13 +57,11 @@ function DisperseTokenModalContent({ NFTWalletAddress }: IDisperseTokenModalProp
     NFTAddress: safeNFTCollectAddress,
     targetInfos: inputData,
     tokenAddress: safeTokenAddress,
-    NFTWalletAddress,
   })
 
   const textAreaInputRef = useRef('')
 
   const { data } = useBalance({
-    address: NFTWalletAddress,
     token: safeTokenAddress,
     cacheTime: 2_000,
     watch: true,
@@ -91,10 +85,7 @@ function DisperseTokenModalContent({ NFTWalletAddress }: IDisperseTokenModalProp
 
   return (
     <ModalContent>
-      <ModalHeader>
-        Disperse token
-        {NFTWalletAddress && `(with NFTWallet: ${NFTWalletAddress})`}
-      </ModalHeader>
+      <ModalHeader>Disperse token</ModalHeader>
       <ModalCloseButton />
       <ModalBody>
         <FormControl>
@@ -121,7 +112,6 @@ function DisperseTokenModalContent({ NFTWalletAddress }: IDisperseTokenModalProp
         <VStack mt="9px" align="start">
           <Button onClick={onClickListValidate}>disperse list validate</Button>
           <AuthApproveTokenButton
-            NFTWalletAddress={NFTWalletAddress}
             tokenAddress={safeTokenAddress}
             requiredAllowance={sum}
             spender={NFT_FACTORY[chainId] ?? AddressZero}
@@ -137,21 +127,17 @@ function DisperseTokenModalContent({ NFTWalletAddress }: IDisperseTokenModalProp
   )
 }
 
-export default function DisperseTokenModal({
-  NFTWalletAddress,
-}: IDisperseTokenModalProps) {
+export default function DisperseTokenModal() {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const usedString = NFTWalletAddress
-    ? 'Open Disperse Transfer with NFTWallet'
-    : 'Disperse token with your own wallet'
+  const usedString = 'Disperse token with your own wallet'
 
   return (
     <>
       <Button onClick={onOpen}>{usedString}</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <DisperseTokenModalContent NFTWalletAddress={NFTWalletAddress} />
+        <DisperseTokenModalContent />
       </Modal>
     </>
   )

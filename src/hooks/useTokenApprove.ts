@@ -37,15 +37,15 @@ export default function useTokenApprove({
       abi: erc20ABI,
       functionName: 'approve',
       args: [spender, MaxUint256],
+      enabled: tokenAddress !== AddressZero,
     })
   const { config: NFTWalletApproveConfig } = usePrepareContractWrite({
     address: NFTWalletAddress ?? AddressZero,
     abi: ABINFTWallet,
     functionName: 'execute',
     args: [spender, Zero, (approveContractData?.request?.data || '0x') as `0x${string}`],
+    enabled: NFTWalletAddress !== AddressZero,
   })
-
-  console.log(usedAccount)
 
   const {
     write: approve,
@@ -55,7 +55,6 @@ export default function useTokenApprove({
   } = useContractWrite(
     (usedAccount === address ? approveContractConfig : NFTWalletApproveConfig) as any,
   )
-  console.log(usedAccount === address)
   const { data: allowance, isLoading: isAllowanceLoading } = useContractRead({
     abi: erc20ABI,
     address: tokenAddress,
@@ -63,6 +62,7 @@ export default function useTokenApprove({
     args: [usedAccount, spender],
     watch: true,
     cacheTime: 2_000,
+    enabled: tokenAddress !== AddressZero,
   })
 
   console.table({

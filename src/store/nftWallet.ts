@@ -4,7 +4,6 @@ import { BigNumber } from 'ethers'
 import { erc20ABI, erc721ABI } from 'wagmi'
 import { multicall, prepareWriteContract, writeContract } from 'wagmi/actions'
 
-import ABINFTSample from '@/constants/abis/ABINFTSample'
 import ABINFTWalletFactory from '@/constants/abis/ABINFTWalletFactory'
 import { NFT_FACTORY } from '@/constants/nftContract'
 import { toast } from '@/utils/createToast'
@@ -67,7 +66,7 @@ export const nftWalletsStore = createStore('nftWallets')(
             },
             {
               address: nftAddress,
-              abi: ABINFTSample,
+              abi: erc721ABI,
               functionName: 'ownerOf',
               args: [_orderIndex],
             },
