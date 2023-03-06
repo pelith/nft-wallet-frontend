@@ -16,7 +16,7 @@ const NftNavigator = () => {
 
   useEffect(() => {
     if (sampleNftController.isSuccess) {
-      navigate(`#sample`)
+      navigate(`/#scan-sample`)
     }
   }, [sampleNftController.isSuccess])
 

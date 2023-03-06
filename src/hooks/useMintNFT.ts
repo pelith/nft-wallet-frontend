@@ -1,3 +1,5 @@
+import { useToast } from '@chakra-ui/react'
+import { useEffect } from 'react'
 import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi'
 
 import NFTAbi from '@/constants/abis/ABINFTSample'
@@ -13,7 +15,18 @@ export default function useMintNFT(nftAddress: `0x${string}`) {
     enabled: nftAddress === NFTCollectionInfo.sample.address,
   })
 
+  const toast = useToast()
+
   const { isLoading, isSuccess, data, write } = useContractWrite(config)
+  useEffect(() => {
+    if (isSuccess) {
+      toast({
+        title: 'Sample NFT success created',
+        status: 'success',
+        position: 'bottom-right',
+      })
+    }
+  }, [isSuccess])
 
   return {
     isLoading: isLoading,

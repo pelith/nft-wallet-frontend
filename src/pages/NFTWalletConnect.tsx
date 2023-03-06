@@ -10,13 +10,13 @@ import {
   MenuList,
   MenuOptionGroup,
 } from '@chakra-ui/react'
-import { useMemo, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { NavLink, useLocation } from 'react-router-dom'
 import { useAccount, useNetwork } from 'wagmi'
 
 import NFTPreviewLoader from '@/components/NFTPreviewLoader'
 import { USED_CHAIN } from '@/constants/chain'
-import { NFT_COLLECTION } from '@/constants/nftCollection'
+import { NFT_COLLECTION, SAMPLE_NFT_ADDRESS } from '@/constants/nftCollection'
 import { useNftWalletsStore } from '@/store/nftWallet'
 import getERC721EnumerableScan from '@/utils/getERC721EnumerableScan'
 import { isAddress } from '@/utils/web3Utils'
@@ -24,6 +24,7 @@ import { isAddress } from '@/utils/web3Utils'
 export default function NFTWalletConnect() {
   const [usedCollection, setUsedCollection] = useState('all')
   const { chain } = useNetwork()
+  const { hash } = useLocation()
 
   const nftCollectionOptions = useMemo(() => {
     return NFT_COLLECTION[USED_CHAIN]
@@ -54,11 +55,20 @@ export default function NFTWalletConnect() {
     }
   }, [selfWallets, usedCollection])
 
-  function scan() {
+  function scan(collectionAddress: string) {
     if (isAddress(address)) {
-      getERC721EnumerableScan(address as `0x${string}`, usedCollection as `0x${string}`)
+      getERC721EnumerableScan(
+        address as `0x${string}`,
+        collectionAddress as `0x${string}`,
+      )
     }
   }
+
+  useEffect(() => {
+    if (hash === '#scan-sample') {
+      scan(SAMPLE_NFT_ADDRESS[USED_CHAIN])
+    }
+  }, [hash])
 
   return (
     <Box mt="30px">
@@ -85,7 +95,7 @@ export default function NFTWalletConnect() {
           </MenuList>
         </Menu>
         {canScan && (
-          <Button size="md" onClick={scan} borderBottomRadius="0">
+          <Button size="md" onClick={() => scan(usedCollection)} borderBottomRadius="0">
             Scan
           </Button>
         )}
