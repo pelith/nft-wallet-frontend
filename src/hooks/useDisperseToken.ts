@@ -34,7 +34,7 @@ const createUseDisperseToken = (isSimple: boolean) => {
     const { isInsufficient, ids, values, sum } = useMemo(() => {
       const { sum, ids, values } = targetInfos.reduce(
         (prev, curr) => {
-          const added = parseUnits(curr.values, balanceData?.decimals ?? 18)
+          const added = parseUnits(`${curr.values}`, balanceData?.decimals ?? 18)
           prev.sum = prev.sum.add(added)
           prev.values.push(added)
           prev.ids.push(BigNumber.from(curr.nftIndex))

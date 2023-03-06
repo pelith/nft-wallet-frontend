@@ -29,7 +29,7 @@ function disperseFormValidate(inputStr: string) {
         if (startId > endId) return false
         return range(startId, endId).map((id) => ({
           nftIndex: '' + id,
-          value: values,
+          values: values,
         }))
       }
       return [{ nftIndex: idRange, values: values }]

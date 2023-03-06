@@ -68,6 +68,7 @@ const NftNavigator = () => {
               textDecor="underline"
               _hover={{ textDecoration: 'none' }}
               onClick={setUseWhitelist.toggle}
+              color="white"
             >
               Click to create with NFT Collection
             </Box>
@@ -84,6 +85,7 @@ const NftNavigator = () => {
               textDecor="underline"
               _hover={{ textDecoration: 'none' }}
               onClick={setUseWhitelist.toggle}
+              color="white"
             >
               Click to create with NFT Address
             </Box>
