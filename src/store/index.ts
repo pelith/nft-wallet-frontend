@@ -1,6 +1,5 @@
 import { AddressZero } from '@ethersproject/constants'
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
 import { ChainId } from '@/constants/chain'
@@ -22,60 +21,46 @@ export interface IWeb3Store extends INFTWalletStore {
   importTokenList(list: string[]): void
 }
 export const useNFTWalletStore = create(
-  persist(
-    immer<IWeb3Store>((set) => ({
-      nftAddress: AddressZero,
-      nftIndex: 0,
-      nftWalletAddress: AddressZero,
-      isOwnerOfNFTWallet: false,
-      importedTokenList: {},
-      chainId: ChainId.FORK_MAIN_NET,
-      setChainId(chainId) {
-        set((state) => void (state.chainId = chainId))
-      },
-      setNFTSelected(address, nftIndex) {
-        set((state) => {
-          if (isAddress(address)) {
-            state.nftAddress = address as `0x${string}`
-            state.nftIndex = nftIndex
-          }
-        })
-      },
-      setNFTWalletAddress(address) {
-        set((state) => {
-          const _address = isAddress(address)
-          if (_address) {
-            state.nftWalletAddress = _address
-          }
-        })
-      },
-      setIsOwnerOfNFTWallet(walletAddress, isOwner) {
-        set((state) => {
-          if (state.nftWalletAddress === walletAddress) {
-            state.isOwnerOfNFTWallet = isOwner
-          }
-        })
-      },
-      importTokenList(list) {
-        set((state) => {
-          const _set = new Set([
-            ...(state.importedTokenList[state.chainId] ?? []),
-            ...list,
-          ])
-          ;(state.importedTokenList[state.chainId] ??= []).push(
-            ...[..._set].slice(state.importedTokenList[state.chainId].length),
-          )
-        })
-      },
-    })),
-    {
-      name: 'nftWallet',
-      version: 0,
-      partialize(state) {
-        return {
-          importedTokenList: state.importedTokenList,
-        }
-      },
+  immer<IWeb3Store>((set) => ({
+    nftAddress: AddressZero,
+    nftIndex: 0,
+    nftWalletAddress: AddressZero,
+    isOwnerOfNFTWallet: false,
+    importedTokenList: {},
+    chainId: ChainId.FORK_MAIN_NET,
+    setChainId(chainId) {
+      set((state) => void (state.chainId = chainId))
     },
-  ),
+    setNFTSelected(address, nftIndex) {
+      set((state) => {
+        if (isAddress(address)) {
+          state.nftAddress = address as `0x${string}`
+          state.nftIndex = nftIndex
+        }
+      })
+    },
+    setNFTWalletAddress(address) {
+      set((state) => {
+        const _address = isAddress(address)
+        if (_address) {
+          state.nftWalletAddress = _address
+        }
+      })
+    },
+    setIsOwnerOfNFTWallet(walletAddress, isOwner) {
+      set((state) => {
+        if (state.nftWalletAddress === walletAddress) {
+          state.isOwnerOfNFTWallet = isOwner
+        }
+      })
+    },
+    importTokenList(list) {
+      set((state) => {
+        const _set = new Set([...(state.importedTokenList[state.chainId] ?? []), ...list])
+        ;(state.importedTokenList[state.chainId] ??= []).push(
+          ...[..._set].slice(state.importedTokenList[state.chainId].length),
+        )
+      })
+    },
+  })),
 )

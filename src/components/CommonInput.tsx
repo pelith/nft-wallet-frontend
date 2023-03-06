@@ -1,22 +1,54 @@
-import { Box, Divider, Flex, Input, InputProps } from '@chakra-ui/react'
-import React from 'react'
+import { Box, Divider, Flex, Input, InputProps, Select } from '@chakra-ui/react'
+import React, { ReactNode } from 'react'
 
 interface CommonInputProps extends Partial<InputProps> {
   label: string
-  helperText?: string
+  helperText?: ReactNode
+  options?: { label: string; value: string }[]
 }
 
-const CommonInput = ({ label, helperText, value, onChange }: CommonInputProps) => {
+const CommonInput = ({
+  label,
+  helperText,
+  value,
+  onChange,
+  options,
+}: CommonInputProps) => {
   return (
-    <Flex gap="2" position="relative" h="100%">
+    <Flex gap="2px" position="relative" h="100%">
       <Flex flex={1}>
-        <Flex direction="column">
+        <Flex w="250px" direction="column">
           <Box>{label}</Box>
-          {helperText && <Box>{helperText}</Box>}
+          {helperText && (
+            <Box color="#070202" fontSize="small">
+              {helperText}
+            </Box>
+          )}
         </Flex>
-        <Divider ml="auto" orientation="vertical" />
+        <Divider
+          ml="auto"
+          mr="20px"
+          borderColor="blackAlpha.700"
+          orientation="vertical"
+        />
       </Flex>
-      <Input flex={5} value={value} onChange={onChange} />
+      {options ? (
+        <Select onChange={(e) => onChange?.(e as any)}>
+          {options.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </Select>
+      ) : (
+        <Input
+          autoComplete="off"
+          autoCorrect="off"
+          flex={5}
+          value={value}
+          onChange={onChange}
+        />
+      )}
     </Flex>
   )
 }

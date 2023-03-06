@@ -6,6 +6,7 @@ import NftPicker from '@/components/nftPicker/NftPicker'
 import NftPickerMainLayout from '@/components/nftPicker/NftPickerMainLayout'
 import NftWalletDetails from '@/components/nftWalletDetails/NftWalletDetails'
 import MainLayout from '@/layouts/MainLayout'
+import NFTExplorer from '@/pages/NFTExplorer'
 import NFTWalletConnect from '@/pages/NFTWalletConnect'
 
 export const routes: RouteObject[] = [
@@ -23,7 +24,7 @@ export const routes: RouteObject[] = [
       },
       {
         path: '/explorer',
-        element: <div>explorer</div>,
+        element: <NFTExplorer />,
       },
       {
         path: '/nft/:nftAddress/:nftIndex',

@@ -1,8 +1,7 @@
-import { useAccount, useContractRead } from 'wagmi'
+import { useContractRead } from 'wagmi'
 
 import ABINFTWallet from '@/constants/abis/ABINFTWallet'
 export default function useNFTWalletOwner(walletAddress: string) {
-  const account = useAccount()
   const { data, isLoading } = useContractRead({
     address: walletAddress as `0x${string}`,
     abi: ABINFTWallet,
@@ -12,7 +11,7 @@ export default function useNFTWalletOwner(walletAddress: string) {
   })
 
   return {
-    isOwner: data === account.address,
+    ownedBy: data,
     isLoading,
   }
 }

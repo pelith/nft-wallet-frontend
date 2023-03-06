@@ -1,5 +1,11 @@
 import { ChainId } from '@/constants/chain'
-export const tokenList = [
+export interface TokenInfo {
+  name: string
+  symbol: string
+  decimals: number
+  address: `0x${string}`
+}
+export const tokenList: (TokenInfo & { chainId: number })[] = [
   {
     name: 'TestToken1',
     symbol: 'TUSDT',
