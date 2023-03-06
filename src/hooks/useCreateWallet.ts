@@ -1,11 +1,6 @@
 import { AddressZero } from '@ethersproject/constants'
 import { BigNumber } from 'ethers'
-import {
-  useContractWrite,
-  useNetwork,
-  usePrepareContractWrite,
-  useTransaction,
-} from 'wagmi'
+import { useContractWrite, useNetwork, usePrepareContractWrite } from 'wagmi'
 
 import NFTFactoryAbi from '@/constants/abis/ABINFTWalletFactory'
 
@@ -19,14 +14,7 @@ export default function useCreateWallet(nftAddress: string, index: number) {
     functionName: 'createWallet',
     args: [nftAddress as `0x${string}`, BigNumber.from(index)],
   })
-  const { isLoading, isSuccess, data, write, isIdle } = useContractWrite(config)
-
-  const { isSuccess: isTransactionDone } = useTransaction({
-    hash: data?.hash,
-    enabled: !!data?.hash,
-  })
-
-  console.log(isTransactionDone, isLoading, isIdle)
+  const { isLoading, isSuccess, data, write } = useContractWrite(config)
 
   return {
     isLoading,

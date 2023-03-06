@@ -13,6 +13,9 @@ export default function WalletImagePreview({ nftAddress, nftId }: IProps) {
   const { imgURI } = useNFTImageLoading(isAddress(nftAddress) || AddressZero, nftId ?? 0)
   return (
     <Image
+      w="150px"
+      h="150px"
+      objectFit="contain"
       borderRadius="8px"
       src={imgURI}
       fallbackSrc="https://via.placeholder.com/150"

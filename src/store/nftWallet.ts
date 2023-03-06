@@ -1,15 +1,10 @@
 import { AddressZero } from '@ethersproject/constants'
 import { createStore } from '@udecode/zustood'
-import { BigNumber } from 'ethers'
-import { erc20ABI, erc721ABI } from 'wagmi'
-import { multicall, prepareWriteContract, writeContract } from 'wagmi/actions'
+import { erc20ABI } from 'wagmi'
+import { multicall } from 'wagmi/actions'
 
-import ABINFTWalletFactory from '@/constants/abis/ABINFTWalletFactory'
-import { NFT_FACTORY } from '@/constants/nftContract'
 import { toast } from '@/utils/createToast'
-import { wagmiClient } from '@/wagmiConfigure'
-
-import { USED_CHAIN } from './../constants/chain'
+import readNFTWalletInfo from '@/utils/readNFTWalletInfo'
 
 export const nftWalletsStore = createStore('nftWallets')(
   {
@@ -55,38 +50,7 @@ export const nftWalletsStore = createStore('nftWallets')(
     async addNFTAddress(nftAddress: `0x${string}`, orderIndex: number) {
       const key = `${nftAddress}/${orderIndex}`
       try {
-        const _orderIndex = BigNumber.from(orderIndex)
-        const [walletAddress, ownedBy, imgURI] = await multicall({
-          contracts: [
-            {
-              address: NFT_FACTORY[USED_CHAIN],
-              abi: ABINFTWalletFactory,
-              functionName: 'getWalletAddressByNFT',
-              args: [nftAddress, _orderIndex],
-            },
-            {
-              address: nftAddress,
-              abi: erc721ABI,
-              functionName: 'ownerOf',
-              args: [_orderIndex],
-            },
-            {
-              address: nftAddress,
-              abi: erc721ABI,
-              functionName: 'tokenURI',
-              args: [_orderIndex],
-            },
-          ],
-        })
-
-        const isDeployed = await wagmiClient
-          .getProvider({ chainId: USED_CHAIN })
-          .getCode(walletAddress)
-          .then((res) => {
-            return res !== '0x'
-          })
-          .catch(() => false)
-        console.log(isDeployed)
+        const walletInfo = await readNFTWalletInfo(nftAddress, orderIndex)
         // if (!isDeployed) {
         //   console.log(ABINFTWalletFactory, NFT_FACTORY[USED_CHAIN])
         //   const config = await prepareWriteContract({
@@ -102,24 +66,10 @@ export const nftWalletsStore = createStore('nftWallets')(
           if (!draft.entities.has(key)) {
             draft.wallets.push(key)
           }
-          draft.entities.set(key, {
-            id: orderIndex,
-            nftAddress: nftAddress,
-            walletAddress,
-            imgURI: imgURI || '',
-            ownedBy: ownedBy || AddressZero,
-            isDeployed,
-          })
+          draft.entities.set(key, walletInfo)
         })
 
-        console.log({
-          id: orderIndex,
-          nftAddress: nftAddress,
-          walletAddress,
-          imgURI,
-          ownedBy,
-          isDeployed,
-        })
+        console.log(walletInfo)
       } catch (error) {
         console.error(error)
         toast({
@@ -141,43 +91,6 @@ export const nftWalletsStore = createStore('nftWallets')(
       set.state((draft) => {
         if (draft.entities.has(key)) {
           draft.entities.get(key)!.isDeployed = isDeployed
-        }
-      })
-    },
-    updateNFTStatusPassive({
-      ownedBy,
-      imgURI = '',
-      nftAddress,
-      walletAddress = AddressZero,
-      isDeployed,
-      id,
-    }: {
-      ownedBy?: `0x${string}`
-      imgURI?: string
-      nftAddress: `0x${string}`
-      isDeployed?: boolean
-      walletAddress: `0x${string}`
-      id: number
-    }) {
-      const key = `${nftAddress}/${id}`
-      set.state((draft) => {
-        if (draft.entities.has(key)) {
-          if (ownedBy) draft.entities.get(key)!.ownedBy = ownedBy
-          if (imgURI) draft.entities.get(key)!.imgURI = imgURI
-          if (typeof isDeployed === 'boolean')
-            draft.entities.get(key)!.isDeployed = isDeployed
-          if (walletAddress !== AddressZero) {
-            draft.entities.get(key)!.walletAddress = walletAddress
-          }
-        } else {
-          draft.entities.set(key, {
-            nftAddress,
-            id,
-            imgURI,
-            isDeployed: !!isDeployed,
-            ownedBy: ownedBy ?? AddressZero,
-            walletAddress,
-          })
         }
       })
     },

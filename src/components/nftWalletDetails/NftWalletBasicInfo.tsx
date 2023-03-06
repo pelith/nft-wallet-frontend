@@ -1,14 +1,13 @@
 /* eslint-disable no-undef */
 import { Box, Divider, Flex, Grid, GridItem } from '@chakra-ui/react'
-import { AddressZero } from '@ethersproject/constants'
-import { BigNumber } from 'ethers'
 import { useEffect } from 'react'
-import { erc721ABI, useAccount, useContractReads } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 import useNFTWalletIsDeployed from '@/hooks/useNFTWalletIsDeployed'
 import { nftWalletsStore } from '@/store/nftWallet'
 
 import WalletImagePreview from '../WalletImagePreview'
+import CreateWalletButton from './CreateWalletButton'
 
 type Props = {
   nftAddress: `0x${string}`
@@ -34,39 +33,6 @@ const NftWalletBasicInfo = ({ nftAddress, nftId }: Props) => {
       })
     }
   }, [isDeployed, nftAddress, nftId])
-  const _index = BigNumber.from(nftId)
-
-  useContractReads({
-    contracts: [
-      {
-        address: nftAddress,
-        abi: erc721ABI,
-        functionName: 'ownerOf',
-        args: [_index],
-      },
-      {
-        address: nftAddress,
-        abi: erc721ABI,
-        functionName: 'tokenURI',
-        args: [_index],
-      },
-    ],
-    enabled: walletInfo.ownedBy === AddressZero || !walletInfo.imgURI,
-    watch: true,
-    staleTime: 3_000,
-    onSettled(data) {
-      const [ownedBy, imgURI] = data || []
-
-      nftWalletsStore.set.updateNFTStatusPassive({
-        ownedBy,
-        imgURI,
-        nftAddress,
-        id: nftId,
-        walletAddress: walletInfo.nftAddress,
-      })
-    },
-  })
-
   return (
     <Flex direction="column">
       <Flex>
@@ -91,7 +57,10 @@ const NftWalletBasicInfo = ({ nftAddress, nftId }: Props) => {
             {walletInfo.ownedBy}
           </GridItem>
           <GridItem justifySelf="end">Status:</GridItem>
-          <GridItem>{walletInfo.isDeployed ? 'Exist' : 'Does not Exist'}</GridItem>
+          <GridItem>
+            {isDeployed ? 'Exist' : 'Does not Exist'}
+            {!isDeployed && <CreateWalletButton nftAddress={nftAddress} nftId={nftId} />}
+          </GridItem>
         </Grid>
       </Flex>
       <Flex h="1.5rem" gap="20px">

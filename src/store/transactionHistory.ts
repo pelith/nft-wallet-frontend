@@ -1,29 +1,25 @@
-import { create } from 'zustand'
-import { immer } from 'zustand/middleware/immer'
+import { createStore } from '@udecode/zustood'
 
-import { isAddress } from '@/utils/web3Utils'
-
-interface IHistoryState {
-  history: { ts: number; hash: string }[]
-  addHistory(historyHash: string): void
+type HistoryItem = {
+  ts: number
+  hash: string
 }
 
-export const useTransactionHistoryStore = create(
-  immer<IHistoryState>((set) => ({
-    history: [],
-    addHistory(historyHash: string) {
-      if (isAddress(historyHash)) {
-        set((state) => {
-          state.history.push({
-            ts: Date.now(),
-            hash: historyHash,
-          })
+export const transactionHistoryStore = createStore('transactionHistory')({
+  history: new Map<`0x${string}`, HistoryItem[]>(),
+}).extendActions((set) => ({
+  addTransactionHistory(nftWalletAddress: `0x${string}`, hash: string) {
+    set.state((draft) => {
+      if (draft.history.get(nftWalletAddress)) {
+        draft.history.get(nftWalletAddress)?.push({
+          ts: Date.now(),
+          hash,
         })
+      } else {
+        draft.history.set(nftWalletAddress, [{ ts: Date.now(), hash }])
       }
-    },
-  })),
-)
+    })
+  },
+}))
 
-export function addTransactionHistory(hash: string) {
-  useTransactionHistoryStore.getState().addHistory(hash)
-}
+export const { useStore: useTransactionHistoryStore } = transactionHistoryStore

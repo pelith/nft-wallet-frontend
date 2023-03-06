@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { erc20ABI, useContractWrite, usePrepareContractWrite } from 'wagmi'
 
 import ABINFTWallet from '@/constants/abis/ABINFTWallet'
+import { transactionHistoryStore } from '@/store/transactionHistory'
 import { statusValidate } from '@/utils'
 export default function useTokenTransfer(
   walletAddress: `0x${string}`,
@@ -52,7 +53,12 @@ export default function useTokenTransfer(
   }, [status])
 
   return {
-    transfer,
+    transfer: () => {
+      return transfer?.().then((res) => {
+        transactionHistoryStore.set.addTransactionHistory(walletAddress, res.hash)
+        return res
+      })
+    },
     isLoading,
     status,
   }

@@ -1,7 +1,7 @@
 import { useBoolean } from '@chakra-ui/react'
 import { AddressZero } from '@ethersproject/constants'
 import { useEffect } from 'react'
-import { useProvider } from 'wagmi'
+import { useBlockNumber, useProvider } from 'wagmi'
 
 import { isAddress } from '@/utils/web3Utils'
 
@@ -33,7 +33,13 @@ export default function useNFTWalletIsDeployed({
       setIsDeployed.off()
     }
   }
-
+  useBlockNumber({
+    enabled: !isDeployed,
+    onBlock() {
+      refetch()
+    },
+    watch: true,
+  })
   useEffect(() => {
     refetch()
   }, [usedWalletAddress])

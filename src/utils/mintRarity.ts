@@ -4,8 +4,6 @@ import { prepareWriteContract, watchContractEvent, writeContract } from 'wagmi/a
 import ABINFTRarity from '@/constants/abis/ABINFTRarity'
 import { NFTCollectionInfo } from '@/constants/nftCollection'
 
-import { useTransactionHistoryStore } from './../store/transactionHistory'
-
 export default async function mintRarity(walletAddress: `0x${string}`, classId?: number) {
   const config = await prepareWriteContract({
     abi: ABINFTRarity,
@@ -14,10 +12,6 @@ export default async function mintRarity(walletAddress: `0x${string}`, classId?:
     args: [BigNumber.from(classId ?? ~~(Math.random() * 11 + 1))],
   })
   const result = writeContract(config)
-
-  const _response = result.then(
-    (res) => (useTransactionHistoryStore.getState().addHistory(res.hash), res),
-  )
 
   const { summonedIndex } = await new Promise<{
     classIndex: number
@@ -41,5 +35,5 @@ export default async function mintRarity(walletAddress: `0x${string}`, classId?:
     )
   })
 
-  return { summonedIndex, result: await _response }
+  return { summonedIndex, result }
 }
