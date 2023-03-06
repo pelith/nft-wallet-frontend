@@ -98,14 +98,16 @@ const NftNavigator = () => {
         value={nftIndex}
         onChange={(e) => setNftIndex(e.currentTarget.value)}
       />
-      <Button
-        width="200px"
-        isLoading={isWalletFetching}
-        isDisabled={!isValidate}
-        onClick={onConfirm}
-      >
-        Confirm
-      </Button>
+      <Flex justifyContent="center" w="100%">
+        <Button
+          width="200px"
+          isLoading={isWalletFetching}
+          isDisabled={!isValidate}
+          onClick={onConfirm}
+        >
+          Confirm
+        </Button>
+      </Flex>
     </Flex>
   )
 }

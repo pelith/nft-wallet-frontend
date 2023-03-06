@@ -12,7 +12,8 @@ import {
 } from '@chakra-ui/react'
 import { AddressZero } from '@ethersproject/constants'
 import React from 'react'
-import { useBalance } from 'wagmi'
+import { useNavigate } from 'react-router-dom'
+import { useAccount, useBalance } from 'wagmi'
 
 import useMultiBalance from '@/actions/useMultiBalance'
 import { nftWalletsStore, useNftWalletsStore } from '@/store/nftWallet'
@@ -23,6 +24,7 @@ type Props = {
 }
 
 const TokenBalanceTable = ({ nftWalletKey }: Props) => {
+  const { address } = useAccount()
   const walletInfo = nftWalletsStore.get.walletInfo(nftWalletKey)
   const tokens = [...useNftWalletsStore((state) => state.tokenList)]
   const { data: balances } = useMultiBalance({
@@ -37,6 +39,10 @@ const TokenBalanceTable = ({ nftWalletKey }: Props) => {
     address: walletInfo.walletAddress,
     watch: true,
   })
+
+  const isOwned = address === walletInfo.ownedBy
+
+  const navigate = useNavigate()
 
   return (
     <TableContainer>
@@ -69,7 +75,14 @@ const TokenBalanceTable = ({ nftWalletKey }: Props) => {
               <TokenImportButton />
             </Td>
             <Td>
-              <Button rounded="1.5rem" size="sm">
+              <Button
+                rounded="1.5rem"
+                size="sm"
+                onClick={() => {
+                  navigate(`/nft/transfer/${nftWalletKey}`)
+                }}
+                isDisabled={!isOwned}
+              >
                 Transfer with NFT Wallet
               </Button>
             </Td>

@@ -14,6 +14,7 @@ import { useProvider } from 'wagmi'
 import { multicall } from 'wagmi/actions'
 
 import CommonInput from '@/components/CommonInput'
+import NftNavigator from '@/components/nftPicker/NftNavigator'
 import ABINFTWallet from '@/constants/abis/ABINFTWallet'
 import { isAddress } from '@/utils/web3Utils'
 
@@ -89,21 +90,8 @@ export default function NFTExplorer() {
         Explorer
       </Box>
       <Flex h="1.5rem" gap="10px" justifyContent="center" alignItems="center">
-        <CommonInput
-          label={'NFT Wallet address'}
-          onChange={(e) => setInputAddress(e.currentTarget.value)}
-        />
+        <NftNavigator />
       </Flex>
-      <Button
-        w="100px"
-        variant="reward"
-        onClick={onSearch}
-        isLoading={isLoading}
-        size="sm"
-        isDisabled={!_address}
-      >
-        Search
-      </Button>
     </Flex>
   )
 }
