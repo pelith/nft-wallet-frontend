@@ -39,6 +39,7 @@ export default function ConnectButton() {
   const { chain } = useNetwork()
 
   const { switchNetwork } = useSwitchNetwork()
+
   return !isConnected ? (
     <Button onClick={() => connect()}>Connect</Button>
   ) : chain?.id !== +import.meta.env.VITE_APP_CHAIN ? (

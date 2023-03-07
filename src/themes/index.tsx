@@ -13,7 +13,7 @@ const customizeTheme = {
         fontWeight: '400',
         lineHeight: '1.5',
         color: 'emerald.primary', //emerald.primary
-        // bg: '#06021b',
+        bg: '#06021b',
         backgroundImage: `url(${bgUri})`,
         bgPosition: 'center',
         bgRepeat: 'no-repeat',
