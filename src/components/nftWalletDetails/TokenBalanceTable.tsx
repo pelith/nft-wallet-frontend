@@ -5,7 +5,6 @@ import {
   TableContainer,
   Tbody,
   Td,
-  Tfoot,
   Th,
   Thead,
   Tooltip,
@@ -81,7 +80,7 @@ const TokenBalanceTable = ({ nftWalletKey }: Props) => {
           onClick={() => {
             navigate(`/nft/transfer/${nftWalletKey}`)
           }}
-          isDisabled={!isOwned}
+          isDisabled={!isOwned || !walletInfo.isDeployed}
         >
           Transfer with NFT Wallet
         </Button>

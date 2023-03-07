@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Flex, Input, Text, Textarea } from '@chakra-ui/react'
+import { Box, Button, Divider, Flex, Textarea } from '@chakra-ui/react'
 import { AddressZero } from '@ethersproject/constants'
 import range from 'lodash/range'
 import { useMemo, useState } from 'react'
@@ -30,7 +30,7 @@ function disperseFormValidate(inputStr: string) {
         const [startId, endId] = idRange.split('-').map(Number)
         if (startId > endId) return false
         return range(startId, endId).map((id) => ({
-          nftIndex: '' + id,
+          nftIndex: '' + id + 1,
           values: values,
         }))
       }
@@ -58,12 +58,11 @@ export default function DisperseToken() {
   const safeAssetAddress = isAddress(asset) || AddressZero
   const safeNFTAddress = isAddress(nftAddress) || AddressZero
 
-  const { isInsufficient, isLoading, sendTransaction, sum, balanceData } =
-    useDisperseToken({
-      tokenAddress: safeAssetAddress,
-      targetInfos: validDisperseInput || [],
-      NFTAddress: safeNFTAddress,
-    })
+  const { isInsufficient, isLoading, sendTransaction, sum } = useDisperseToken({
+    tokenAddress: safeAssetAddress,
+    targetInfos: validDisperseInput || [],
+    NFTAddress: safeNFTAddress,
+  })
 
   return (
     <Flex
