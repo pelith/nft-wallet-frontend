@@ -30,7 +30,7 @@ const NftPicker = () => {
       direction="column"
       alignItems="center"
       h="100%"
-      justifyContent="space-around"
+      justifyContent="space-evenly"
       my="20px"
     >
       <Flex width="100%" justifyContent="space-around">
@@ -83,10 +83,12 @@ const NftPicker = () => {
           <Text>Mint Demo NFT</Text>
         </Flex>
       </Flex>
-      <Text>Please select a way to create nft wallet</Text>
-      <Button mt="16px" onClick={onClickNavigate}>
-        Next
-      </Button>
+      <Flex direction="column">
+        <Text>Please select a way to create nft wallet</Text>
+        <Button mt="32px" onClick={onClickNavigate}>
+          Next
+        </Button>
+      </Flex>
     </Flex>
   )
 }

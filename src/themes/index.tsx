@@ -1,6 +1,7 @@
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import React from 'react'
 
+import bgUri from '../assets/bg.png'
 import { components } from './components'
 const customizeTheme = {
   styles: {
@@ -12,7 +13,11 @@ const customizeTheme = {
         fontWeight: '400',
         lineHeight: '1.5',
         color: 'emerald.primary', //emerald.primary
-        bg: '#06021b',
+        // bg: '#06021b',
+        backgroundImage: `url(${bgUri})`,
+        bgPosition: 'center',
+        bgRepeat: 'no-repeat',
+        bgSize: 'cover',
         '#root': { h: '100vh' },
       },
       '#chakra-toast-manager-bottom-left': {

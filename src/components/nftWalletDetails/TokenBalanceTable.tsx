@@ -51,8 +51,8 @@ const TokenBalanceTable = ({ nftWalletKey }: Props) => {
         <Table>
           <Thead>
             <Tr>
-              <Th>Token</Th>
-              <Th>Balance</Th>
+              <Th color="sapphire.primary.300">Token</Th>
+              <Th color="sapphire.primary.300">Balance</Th>
             </Tr>
           </Thead>
           <Tbody>

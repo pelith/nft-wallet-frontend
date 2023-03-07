@@ -8,7 +8,7 @@ import { NavLink, Outlet } from 'react-router-dom'
 
 import ConnectButton from '@/components/ConnectButton'
 const activeStyle = {
-  background: '#808080',
+  background: '#645d8d',
   color: 'white',
 }
 
@@ -36,7 +36,7 @@ export default function MainLayout() {
           to="/"
           style={getActiveStyle}
           bg="#7b7697"
-          _hover={{ background: '#999999', color: 'white' }}
+          _hover={{ background: '#776bb9', color: 'white' }}
         >
           Profile
         </Center>
@@ -46,7 +46,7 @@ export default function MainLayout() {
           w="180px"
           h="2.5rem"
           style={getActiveStyle}
-          _hover={{ background: '#999999', color: 'white' }}
+          _hover={{ background: '#776bb9', color: 'white' }}
           bg="#7b7697"
           to="/disperse"
         >
@@ -59,7 +59,7 @@ export default function MainLayout() {
           w="180px"
           h="2.5rem"
           style={getActiveStyle}
-          _hover={{ background: '#999999', color: 'white' }}
+          _hover={{ background: '#776bb9', color: 'white' }}
           bg="#7b7697"
           to="/explorer"
         >

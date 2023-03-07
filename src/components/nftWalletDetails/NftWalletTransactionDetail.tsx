@@ -6,6 +6,7 @@ import {
   TableContainer,
   Tbody,
   Td,
+  Th,
   Thead,
   Tr,
 } from '@chakra-ui/react'
@@ -31,8 +32,8 @@ const NftWalletTransactionDetail = ({ nftAddress, nftId }: IProps) => {
         <Table>
           <Thead>
             <Tr>
-              <Td>times</Td>
-              <Td>hash link</Td>
+              <Th color="sapphire.primary.300">Time</Th>
+              <Th color="sapphire.primary.300">Hash link</Th>
             </Tr>
           </Thead>
           <Tbody>

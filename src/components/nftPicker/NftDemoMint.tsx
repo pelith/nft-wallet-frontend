@@ -1,4 +1,4 @@
-import { Button, Center, Flex } from '@chakra-ui/react'
+import { Box, Button, Center, Flex } from '@chakra-ui/react'
 import { AddressZero } from '@ethersproject/constants'
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -26,10 +26,17 @@ const NftDemoMint = () => {
         <Button
           h="300px"
           w="300px"
+          fontSize="46px"
+          p="16px"
+          wordBreak="break-word"
           isDisabled={sampleNftController.isLoading}
           onClick={sampleNftController.mintNFT}
         >
-          Mint Demo NFT
+          <Box lineHeight="1.5">
+            Mint
+            <br />
+            Demo NFT
+          </Box>
         </Button>
       </Flex>
     </Center>

@@ -66,67 +66,74 @@ export default function DisperseToken() {
     })
 
   return (
-    <Flex pt="50px" flexDir="column" gap="30px" justifyContent="center">
+    <Flex
+      pt="50px"
+      flexDir="column"
+      gap="30px"
+      justifyContent="center"
+      alignItems="center"
+    >
       <Box mb="15px" textAlign="center">
         Disperse Token
       </Box>
-
-      <Flex h="1.5rem" gap="10px" justifyContent="start" alignItems="center">
-        <CommonInput
-          label="NFT address"
-          value={nftAddress}
-          onChange={(e) => setNFTAddress(e.currentTarget.value)}
-          placeholder="0x..."
-        />
-        {NFT_COLLECTION[USED_CHAIN].map((nft) => (
-          <Button
-            key={nft.address}
-            size="sm"
-            onClick={() => {
-              setNFTAddress(nft.address)
-            }}
-          >
-            {nft.name}
-          </Button>
-        ))}
-      </Flex>
-      <Flex h="1.5rem" gap="10px" justifyContent="start" alignItems="center">
-        <CommonInput
-          label="Asset"
-          value={asset}
-          onChange={(e) => setAsset(e.currentTarget.value)}
-          placeholder="0x..."
-        />
-        <Divider orientation="vertical" borderColor="blackAlpha.700" />
-        {[...nftWalletsStore.get.tokenList()].map((token) => (
-          <Button
-            size="sm"
-            key={token[0]}
-            onClick={() => {
-              setAsset(token[0])
-              console.log(token[0])
-            }}
-          >
-            {token[1].name}
-          </Button>
-        ))}
-      </Flex>
-      <Flex minH="1.5rem" gap="10px" justifyContent="start" alignItems="start">
-        <CommonLabelLayout label="Index & Amount">
-          <Textarea
-            placeholder="Format: Index, Amount"
-            title="NFT Wallet Address"
-            w="30vw"
-            size="sm"
-            rows={5}
-            autoComplete="off"
-            rounded="1rem"
-            autoCorrect="off"
-            onChange={(e) => setDisperseList(e.currentTarget.value)}
+      <Flex flexDir="column" gap="30px">
+        <Flex h="1.5rem" gap="10px" justifyContent="start" alignItems="center">
+          <CommonInput
+            label="NFT address"
+            value={nftAddress}
+            onChange={(e) => setNFTAddress(e.currentTarget.value)}
+            placeholder="0x..."
           />
-        </CommonLabelLayout>
+          {NFT_COLLECTION[USED_CHAIN].map((nft) => (
+            <Button
+              key={nft.address}
+              size="sm"
+              onClick={() => {
+                setNFTAddress(nft.address)
+              }}
+            >
+              {nft.name}
+            </Button>
+          ))}
+        </Flex>
+        <Flex h="1.5rem" gap="10px" justifyContent="start" alignItems="center">
+          <CommonInput
+            label="Asset"
+            value={asset}
+            onChange={(e) => setAsset(e.currentTarget.value)}
+            placeholder="0x..."
+          />
+          <Divider orientation="vertical" borderColor="blackAlpha.700" />
+          {[...nftWalletsStore.get.tokenList()].map((token) => (
+            <Button
+              size="sm"
+              key={token[0]}
+              onClick={() => {
+                setAsset(token[0])
+                console.log(token[0])
+              }}
+            >
+              {token[1].name}
+            </Button>
+          ))}
+        </Flex>
+        <Flex minH="1.5rem" gap="10px" justifyContent="start" alignItems="start">
+          <CommonLabelLayout label="Index & Amount">
+            <Textarea
+              placeholder="Format: Index, Amount"
+              title="NFT Wallet Address"
+              w="30vw"
+              size="sm"
+              rows={5}
+              autoComplete="off"
+              rounded="1rem"
+              autoCorrect="off"
+              onChange={(e) => setDisperseList(e.currentTarget.value)}
+            />
+          </CommonLabelLayout>
 
-        <Box as="pre">{`Format: Index,Amount\nExample: 1-50,100\n         60-100,200`}</Box>
+          <Box as="pre">{`Format: Index,Amount\nExample: 1-50,100\n         60-100,200`}</Box>
+        </Flex>
       </Flex>
       <Flex>
         <AuthApproveTokenButton
