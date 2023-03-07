@@ -3,8 +3,8 @@ import { AddressZero, Zero } from '@ethersproject/constants'
 import { parseUnits } from '@ethersproject/units'
 import { BigNumber } from 'ethers'
 import { useMemo } from 'react'
-import { useAccount, useBalance, usePrepareContractWrite } from 'wagmi'
-import { writeContract } from 'wagmi/actions'
+import { useAccount, useBalance } from 'wagmi'
+import { prepareWriteContract, writeContract } from 'wagmi/actions'
 
 import ABINFTWalletFactory from '@/constants/abis/ABINFTWalletFactory'
 import { USED_CHAIN } from '@/constants/chain'
@@ -30,6 +30,7 @@ const createUseDisperseToken = (isSimple: boolean) => {
       token: tokenAddress,
       enabled: tokenAddress !== AddressZero,
     })
+    console.log(tokenAddress)
 
     const { isInsufficient, ids, values, sum } = useMemo(() => {
       const { sum, ids, values } = targetInfos.reduce(
@@ -52,16 +53,6 @@ const createUseDisperseToken = (isSimple: boolean) => {
         sum,
       }
     }, [balanceData?.decimals, balanceData?.formatted, targetInfos])
-    const { config: disperseConfig } = usePrepareContractWrite({
-      address: NFT_FACTORY[USED_CHAIN] || AddressZero,
-      abi: ABINFTWalletFactory,
-      functionName: isSimple ? 'disperseToken' : 'disperseTokenSimple',
-      args: [tokenAddress, nftAddress, ids, values],
-      enabled:
-        tokenAddress !== AddressZero &&
-        nftAddress !== AddressZero &&
-        Boolean(targetInfos.length),
-    })
 
     const [isLoading, { on, off }] = useBoolean(false)
 
@@ -69,12 +60,19 @@ const createUseDisperseToken = (isSimple: boolean) => {
       if (!isInsufficient) {
         on()
         try {
-          const { hash } = await writeContract(disperseConfig)
+          const config = await prepareWriteContract({
+            address: NFT_FACTORY[USED_CHAIN] || AddressZero,
+            abi: ABINFTWalletFactory,
+            functionName: isSimple ? 'disperseToken' : 'disperseTokenSimple',
+            args: [tokenAddress, nftAddress, ids, values],
+          })
+          const { hash } = await writeContract(config)
           toast({
             title: `Transaction success: ${hash}`,
             status: 'success',
           })
         } catch (error) {
+          console.error(error)
           toast({
             title: (error as Error).message,
             status: 'error',

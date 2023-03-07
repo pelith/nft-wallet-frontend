@@ -65,13 +65,6 @@ export default function useTokenApprove({
     enabled: tokenAddress !== AddressZero,
   })
 
-  console.table({
-    allowance: allowance?.toString(),
-    spender,
-    tokenAddress,
-    usedAccount,
-  })
-
   return {
     approvalState:
       isApprovalLoading || isAllowanceLoading

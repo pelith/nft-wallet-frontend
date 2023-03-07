@@ -3,8 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite --port 3000",
-    "build": "tsc && vite build",
+    "dev": "vite --port 3000 --mode dev",
+    "build": "tsc && vite build --mode production",
     "preview": "vite preview",
     "dev:fork": "vite --port 3000 --mode fork",
     "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --quiet --fix --ignore-path ./.gitignore",

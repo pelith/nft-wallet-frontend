@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import { Box, Divider, Flex, Grid, GridItem, Text } from '@chakra-ui/react'
+import { AddressZero } from '@ethersproject/constants'
 import { useEffect } from 'react'
 import { useAccount } from 'wagmi'
 
@@ -61,7 +62,7 @@ const NftWalletBasicInfo = ({ nftAddress, nftId }: Props) => {
             bg={isOwned ? 'emerald.tertiary' : 'transparent'}
             color="emerald.secondary"
           >
-            {walletInfo.ownedBy}
+            {walletInfo.ownedBy === AddressZero ? '' : walletInfo.ownedBy}
           </GridItem>
           <GridItem justifySelf="end">Status:</GridItem>
           <GridItem color="emerald.secondary">

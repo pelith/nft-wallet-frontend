@@ -1,5 +1,6 @@
 import { Box, Button, Divider, Flex, Textarea } from '@chakra-ui/react'
 import { AddressZero } from '@ethersproject/constants'
+import { BigNumber } from 'ethers'
 import range from 'lodash/range'
 import { useMemo, useState } from 'react'
 
@@ -22,6 +23,12 @@ function disperseFormValidate(inputStr: string) {
       if (!/(^\d+-\d+|\d+)$/.test(idRange)) {
         return false
       }
+      try {
+        if (BigNumber.from(values)) {
+        }
+      } catch (error) {
+        return false
+      }
       if (isNaN(parseFloat(values))) {
         return false
       }
@@ -30,7 +37,7 @@ function disperseFormValidate(inputStr: string) {
         const [startId, endId] = idRange.split('-').map(Number)
         if (startId > endId) return false
         return range(startId, endId).map((id) => ({
-          nftIndex: '' + id + 1,
+          nftIndex: '' + (id + 1),
           values: values,
         }))
       }
@@ -63,7 +70,6 @@ export default function DisperseToken() {
     targetInfos: validDisperseInput || [],
     NFTAddress: safeNFTAddress,
   })
-
   return (
     <Flex
       pt="50px"

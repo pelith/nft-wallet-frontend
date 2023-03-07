@@ -19,3 +19,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     </ThemeProvider>
   </WagmiConfig>,
 )
+
+console.log(import.meta.env.VITE_APP_CHAIN)

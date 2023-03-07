@@ -5,6 +5,14 @@ const selfTest = {
   id: 8787,
   nativeCurrency: fantom.nativeCurrency,
   contract: fantom.contracts,
+  rpcUrls: {
+    default: {
+      http: ['https://paul-dev.ddns.net/'],
+    },
+    public: {
+      http: ['https://paul-dev.ddns.net/'],
+    },
+  },
 } as const
 
 export const USED_CHAIN_INFO = [fantom, selfTest]
