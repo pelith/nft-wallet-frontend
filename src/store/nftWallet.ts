@@ -21,7 +21,7 @@ export const nftWalletsStore = createStore('nftWallets')(
         address: `0x${string}`
       }
     >(
-      import.meta.env.DEV
+      import.meta.env.VITE_APP_IS_DEV
         ? [
             [
               '0x4da7745993E76929Ba11fDa60cAF671e8161F0fa',
