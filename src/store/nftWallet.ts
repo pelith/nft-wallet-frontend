@@ -3,10 +3,11 @@ import { createStore } from '@udecode/zustood'
 import { erc20ABI } from 'wagmi'
 import { multicall } from 'wagmi/actions'
 
+import { tokenList } from '@/constants/token'
 import { NFTWalletInfo } from '@/types/walletInfo'
 import { toast } from '@/utils/createToast'
 import readNFTWalletInfo from '@/utils/readNFTWalletInfo'
-
+console.log(import.meta.env.DEV)
 export const nftWalletsStore = createStore('nftWallets')(
   {
     entities: new Map<string, NFTWalletInfo>(),
@@ -19,17 +20,21 @@ export const nftWalletsStore = createStore('nftWallets')(
         decimals: number
         address: `0x${string}`
       }
-    >([
-      [
-        '0x4da7745993E76929Ba11fDa60cAF671e8161F0fa',
-        {
-          name: 'TestToken1',
-          symbol: 'TUSDT',
-          address: '0x4da7745993E76929Ba11fDa60cAF671e8161F0fa',
-          decimals: 18,
-        },
-      ],
-    ]),
+    >(
+      import.meta.env.DEV
+        ? [
+            [
+              '0x4da7745993E76929Ba11fDa60cAF671e8161F0fa',
+              {
+                name: 'TestToken1',
+                symbol: 'TUSDT',
+                address: '0x4da7745993E76929Ba11fDa60cAF671e8161F0fa',
+                decimals: 18,
+              },
+            ],
+          ]
+        : tokenList.map((ele) => [ele.address, ele]),
+    ),
   },
   {
     persist: {

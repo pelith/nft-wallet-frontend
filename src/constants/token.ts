@@ -1,16 +1,14 @@
-import { ChainId } from '@/constants/chain'
 export interface TokenInfo {
   name: string
   symbol: string
   decimals: number
   address: `0x${string}`
 }
-export const tokenList: (TokenInfo & { chainId: number })[] = [
+export const tokenList: TokenInfo[] = [
   {
-    name: 'TestToken1',
-    symbol: 'TUSDT',
-    address: '0x4da7745993E76929Ba11fDa60cAF671e8161F0fa',
-    decimals: 18,
-    chainId: ChainId.FORK_MAIN_NET,
+    name: 'fUSDT',
+    symbol: 'fUSDT',
+    address: '0x049d68029688eAbF473097a2fC38ef61633A3C7A',
+    decimals: 6,
   },
 ]
