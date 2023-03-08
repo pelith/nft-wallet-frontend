@@ -1,3 +1,4 @@
+import { CheckCircleIcon } from '@chakra-ui/icons'
 import { Box, Flex, Image, Skeleton, useImage } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { useBalance } from 'wagmi'
@@ -49,6 +50,7 @@ export default function NFTPreviewLoader({ nftWalletKey }: IProps) {
         <Image src={src} w="150px" h="150px" objectFit="contain"></Image>
       </Skeleton>
       <Box cursor="pointer">
+        {walletInfo.isDeployed && <CheckCircleIcon mr="10px" />}
         {shortenAddress(walletInfo.nftAddress)}: {walletInfo.id}
       </Box>
       <Box>

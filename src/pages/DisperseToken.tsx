@@ -1,8 +1,9 @@
 import { Box, Button, Divider, Flex, Textarea } from '@chakra-ui/react'
 import { AddressZero } from '@ethersproject/constants'
-import { BigNumber } from 'ethers'
+import { parseUnits } from '@ethersproject/units'
 import range from 'lodash/range'
 import { useMemo, useState } from 'react'
+import { useAccount, useBalance } from 'wagmi'
 
 import { AuthApproveTokenButton } from '@/components/AuthButton'
 import CommonInput from '@/components/CommonInput'
@@ -14,7 +15,7 @@ import { useDisperseToken } from '@/hooks/useDisperseToken'
 import { nftWalletsStore } from '@/store/nftWallet'
 import { isAddress } from '@/utils/web3Utils'
 
-function disperseFormValidate(inputStr: string) {
+function disperseFormValidate(inputStr: string, decimals: number) {
   const lines = inputStr.split('\n')
   return lines
     .map((line) => {
@@ -24,8 +25,7 @@ function disperseFormValidate(inputStr: string) {
         return false
       }
       try {
-        if (BigNumber.from(values)) {
-        }
+        parseUnits(values, decimals)
       } catch (error) {
         return false
       }
@@ -36,8 +36,8 @@ function disperseFormValidate(inputStr: string) {
       if (~idRange.indexOf('-')) {
         const [startId, endId] = idRange.split('-').map(Number)
         if (startId > endId) return false
-        return range(startId, endId).map((id) => ({
-          nftIndex: '' + (id + 1),
+        return range(startId, endId + 1).map((id) => ({
+          nftIndex: '' + id,
           values: values,
         }))
       }
@@ -50,9 +50,21 @@ export default function DisperseToken() {
   const [nftAddress, setNFTAddress] = useState('')
   const [asset, setAsset] = useState('')
   const [disperseList, setDisperseList] = useState('')
+  const { address: usedAccount } = useAccount()
+
+  const safeAssetAddress = isAddress(asset) || AddressZero
+  const safeNFTAddress = isAddress(nftAddress) || AddressZero
+
+  const { data: balanceData } = useBalance({
+    address: usedAccount,
+    watch: true,
+    token: safeAssetAddress,
+    enabled: safeNFTAddress !== AddressZero,
+  })
+
   const validDisperseInput = useMemo(() => {
     try {
-      const result = disperseFormValidate(disperseList)
+      const result = disperseFormValidate(disperseList, balanceData?.decimals ?? 18)
       console.log(result)
       if (result.some((e) => !e)) return false
       return result as { nftIndex: string; values: string }[]
@@ -62,14 +74,13 @@ export default function DisperseToken() {
     }
   }, [disperseList])
 
-  const safeAssetAddress = isAddress(asset) || AddressZero
-  const safeNFTAddress = isAddress(nftAddress) || AddressZero
-
   const { isInsufficient, isLoading, sendTransaction, sum } = useDisperseToken({
     tokenAddress: safeAssetAddress,
     targetInfos: validDisperseInput || [],
     NFTAddress: safeNFTAddress,
+    balanceData,
   })
+
   return (
     <Flex
       pt="50px"

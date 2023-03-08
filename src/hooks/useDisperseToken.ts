@@ -3,8 +3,7 @@ import { AddressZero, Zero } from '@ethersproject/constants'
 import { parseUnits } from '@ethersproject/units'
 import { BigNumber } from 'ethers'
 import { useMemo } from 'react'
-import { useAccount, useBalance } from 'wagmi'
-import { prepareWriteContract, writeContract } from 'wagmi/actions'
+import { FetchBalanceResult, prepareWriteContract, writeContract } from 'wagmi/actions'
 
 import ABINFTWalletFactory from '@/constants/abis/ABINFTWalletFactory'
 import { USED_CHAIN } from '@/constants/chain'
@@ -15,23 +14,15 @@ interface IProps {
   tokenAddress: `0x${string}`
   NFTAddress: `0x${string}`
   targetInfos: { nftIndex: string; values: string }[]
+  balanceData?: FetchBalanceResult
 }
 const createUseDisperseToken = (isSimple: boolean) => {
   return function useDisperse({
     tokenAddress,
     targetInfos,
     NFTAddress: nftAddress,
+    balanceData,
   }: IProps) {
-    const { address: usedAccount } = useAccount()
-
-    const { data: balanceData } = useBalance({
-      address: usedAccount,
-      watch: true,
-      token: tokenAddress,
-      enabled: tokenAddress !== AddressZero,
-    })
-    console.log(tokenAddress)
-
     const { isInsufficient, ids, values, sum } = useMemo(() => {
       const { sum, ids, values } = targetInfos.reduce(
         (prev, curr) => {
@@ -87,7 +78,6 @@ const createUseDisperseToken = (isSimple: boolean) => {
       isInsufficient,
       sum,
       isLoading,
-      balanceData,
     }
   }
 }
